@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Facebook AppId -->
+    <string name="app_id">406460756156796</string>
+    <string name="app_name">Carpool App</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Common -->
+
+
+    <!-- Login activity resources -->
+    <string name="title_activity_login">Let\'s get started!</string>
+    <string name="get_started">To get started, login using Facebook</string>
+    <string name="button_skip_login">Skip Login</string>
+
+    <!-- Role section activity -->
+    <string name="title_activity_role_selection">Select your role</string>
+    <string name="driver_passenger_role_description">Are you a driver looking to offer a ride or a passenger looking for a ride?</string>
+    <string name="driver_description">I\'m a driver</string>
+    <string name="passenger_description">I\'m a passenger</string>
+
+    <!--  Driver activity -->
+    <string name="title_activity_driver">You are a driver</string>
+    
+    <!--  Passenger activity -->
+    <string name="title_activity_passenger">You are a passenger</string>
+
+</resources>
