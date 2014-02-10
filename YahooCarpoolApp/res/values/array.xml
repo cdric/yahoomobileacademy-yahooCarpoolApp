@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ride_occupency_values">
+        <item>1 person</item>
+        <item>2 persons</item>
+        <item>3 persons</item>
+        <item>4 persons</item>
+        <item>5 persons</item>
+        <item>6 persons</item>
+        <item>7 persons</item>
+        <item>8 persons</item>
+    </string-array>
+    
+    <string-array name="ride_destinations_values">
+        <item>San Francisco, CA</item>
+        <item>Palo Alto, CA</item>
+        <item>Santa Clara, CA</item>
+        <item>San Jose, CA</item>
+        <item>Sunnyvale, CA</item>
+        <item>Berkley, CA</item>
+    </string-array>
+</resources>

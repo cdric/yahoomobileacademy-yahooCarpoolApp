@@ -53,28 +53,41 @@
 <!--             android:layout_gravity="center_horizontal" -->
 <!--             android:gravity="center_horizontal"/> -->
         
-        <com.facebook.widget.LoginButton
-              android:id="@+id/btn_facebookAuthButton"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="20dp"
-              android:layout_gravity="center_horizontal"
-               />
-
+<!--         <com.facebook.widget.LoginButton -->
+<!--               android:id="@+id/btn_facebookAuthButton" -->
+<!--               android:layout_width="wrap_content" -->
+<!--               android:layout_height="wrap_content" -->
+<!--               android:layout_marginTop="20dp" -->
+<!--               android:layout_gravity="center_horizontal" -->
+<!--                /> -->
+        
         <Button
-            android:id="@+id/btn_skip_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/button_skip_login"
-            android:onClick="onSkipLoginAction"
-            android:background="@drawable/com_facebook_loginbutton_silver"
-            android:textSize="@dimen/com_facebook_loginview_text_size"
-            android:textColor="@color/com_facebook_blue"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:layout_marginTop="10dp" 
-            android:layout_marginBottom="10dp" />
+		        android:id="@+id/btn_facebook"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textStyle="bold"
+		        android:layout_marginTop="100dp"
+		        android:text="@string/login"
+		        android:textColor="#fff"
+		        android:layout_gravity="center_horizontal"
+		        android:background="@drawable/button_login"
+		        android:onClick="onLoginButtonClicked"
+		        />
+
+<!--         <Button -->
+<!--             android:id="@+id/btn_skip_login" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_gravity="center_horizontal" -->
+<!--             android:text="@string/button_skip_login" -->
+<!--             android:onClick="onSkipLoginAction" -->
+<!--             android:background="@drawable/com_facebook_loginbutton_silver" -->
+<!--             android:textSize="@dimen/com_facebook_loginview_text_size" -->
+<!--             android:textColor="@color/com_facebook_blue" -->
+<!--             android:paddingLeft="20dp" -->
+<!--             android:paddingRight="20dp" -->
+<!--             android:layout_marginTop="10dp"  -->
+<!--             android:layout_marginBottom="10dp" /> -->
 
     </LinearLayout>
           

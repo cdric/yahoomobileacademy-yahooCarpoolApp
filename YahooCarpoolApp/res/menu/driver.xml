@@ -1,9 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
+    
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_profileSelection"
+        android:icon="@drawable/ic_action_profile"
         android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:onClick="onRoleSelectionMenu"
+        android:showAsAction="always"
+        android:title="@string/action_profile"/>
 
 </menu>
