@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 public class FragmentTabListener<T extends Fragment> implements TabListener {
 	
     private Fragment mFragment;
+    
 	private final FragmentActivity mActivity;
 	private final String mTag;
 	private final Class<T> mClass;
@@ -63,7 +64,7 @@ public class FragmentTabListener<T extends Fragment> implements TabListener {
 		// User selected the already selected tab. Usually do nothing.
 	}
 	
-	public Fragment getFragment() {
+	public Fragment getMyFragment() {
 		return mFragment;
 	}
 	

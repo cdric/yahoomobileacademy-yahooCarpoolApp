@@ -9,12 +9,16 @@
     <!-- Common -->
     
     <!-- Action bar related strings -->
-    <string name="driver">Driver</string>
-    <string name="passenger">Passenger</string>
     <string name="action_profile">Select your role</string>
-    <string name="tab_driver_ridedetails">Your ride</string>
+    
+    <string name="driver">Driver</string>
+    <string name="tab_driver_ridedetails">Ride</string>
     <string name="tab_driver_notifications">Notifications</string>
-    <string name="tab_driver_passengers">Passengers</string>
+    <string name="tab_driver_passengers"></string>
+    
+    <string name="passenger">Passenger</string>
+    <string name="tab_passenger_search">Search</string>
+    <string name="tab_passenger_notifications">Notifications</string>
 
     <!-- Login activity resources -->
     <string name="title_activity_login">Let\'s get started!</string>
@@ -35,16 +39,14 @@
     <string name="title_fragment_driver_ride_details_time">What time will you be leaving?</string>
     <string name="title_fragment_driver_ride_details_destination">Where will you be driving to?</string>
     <string name="title_fragment_driver_ride_details_vehicule_capacity">How many people can you take?</string>    
+    <string name="btnLockRide">Save</string>
+    <string name="btnDelete">Delete</string>
     
     <!--  Passenger activity -->
     <string name="title_activity_passenger">You are a passenger</string>
-    <string name="btnLockRide">Save your ride</string>
-    <string name="btnDelete">Delete</string>
+    <string name="title_fragment_driver_ride_details_time">What time will you be leaving?</string>
+    <string name="title_fragment_passenger_ride_start_time">When would you like to leave?</string>
+    <string name="title_fragment_passenger_search_ride_offset">How flexible are you?</string>
+    <string name="btnSearchRide">Search</string>
     
-    
-
-
-    
-    
-
 </resources>

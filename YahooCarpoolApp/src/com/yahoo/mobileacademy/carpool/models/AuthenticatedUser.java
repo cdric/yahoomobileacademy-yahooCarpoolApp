@@ -11,11 +11,10 @@ import org.json.JSONObject;
 public class AuthenticatedUser {
 	
 	// Member variables
-	
 	private String name;
 	private String email;
 	private String phoneNumber;
-	private String facebookId;
+	private int facebookId;
 
 	// Getters-Setters
 	
@@ -43,11 +42,11 @@ public class AuthenticatedUser {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getFacebookId() {
+	public int getFacebookId() {
 		return facebookId;
 	}
 
-	public void setFacebookId(String facebookId) {
+	public void setFacebookId(int facebookId) {
 		this.facebookId = facebookId;
 	}
 
@@ -56,11 +55,11 @@ public class AuthenticatedUser {
 		try {
 			
 			user.setName(jsonObject.getString("name"));
-			user.setFacebookId(jsonObject.getString("facebookId"));
+			user.setFacebookId(jsonObject.getInt("facebookId"));
 			
 			// Not available through the Facebook Graph API
-			user.setEmail(jsonObject.getString("first_name") + " AT facebook.com");
-			user.setPhoneNumber("123-456-1234");
+			// user.setEmail(jsonObject.getString("first_name") + " AT facebook.com");
+			// user.setPhoneNumber("123-456-1234");
 			
 		} catch (JSONException e) {
 			e.printStackTrace();

@@ -11,18 +11,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yahoo.mobileacademy.carpool.R;
+import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
 import com.yahoo.mobileacademy.carpool.models.Passenger;
 
 /**
- * Custom adapter for the Passenger Summary List item
+ * Custom adapter for the Passenger list view
  * 
  * @author CŽdric Lignier <cedric.lignier@free.fr>
  *
  */
-public class PassengerSummaryAdapter extends ArrayAdapter<Passenger> {
+public class RideGuestsAdapter extends ArrayAdapter<Passenger> {
 	
-	public PassengerSummaryAdapter(Context context, List<Passenger> objects) {
+	public RideGuestsAdapter(Context context, List<Passenger> objects) {
 		super(context, 0, objects);
 	}
 
@@ -33,30 +35,38 @@ public class PassengerSummaryAdapter extends ArrayAdapter<Passenger> {
 
 			LayoutInflater inflatter = (LayoutInflater) getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = inflatter.inflate(R.layout.guest_profile_summary, null);
+			view = inflatter.inflate(R.layout.listview_ride_guests, null);
 
 		}
 
-		final Passenger passenger = getItem(position);
+		Passenger passenger = getItem(position);
 
 		TextView nameView = (TextView) view.findViewById(R.id.tvName);
 		String formattedName = "<b>" + passenger.getName() + "</b>";
 		nameView.setText(Html.fromHtml(formattedName));
 		
 		TextView emailView = (TextView) view.findViewById(R.id.tvEmail);
-		String formattedEmail = passenger.getEmail();
+		String formattedEmail;
+		if (passenger.getEmail() != null) {
+		    formattedEmail = passenger.getEmail();
+		} else {
+			formattedEmail = "This user has not provided an email address";
+		}
 		emailView.setText(Html.fromHtml(formattedEmail));
 		
 		TextView phoneView = (TextView) view.findViewById(R.id.tvPhone);
-		String formattedPhone = passenger.getPhoneNumber();
+		String formattedPhone;
+		if (passenger.getPhoneNumber() != null) {
+			formattedPhone = passenger.getPhoneNumber();
+		} else {
+			formattedPhone = "This user has not provided a phone number to be reached out to";
+		}
 		phoneView.setText(Html.fromHtml(formattedPhone));
 		
 		ImageView imageView = (ImageView) view.findViewById((R.id.ivProfile));
-//		ImageLoader.getInstance().displayImage(
-//				passenger.getProfileImageUrl(), imageView);
+		ImageLoader.getInstance().displayImage(
+				UtilityClass.getDisplayImageURLForFacebookId(passenger.getUserId()), imageView);
 
-		//Toast.makeText(getContext(), "Generate passenger entry: " + passenger.getName(), Toast.LENGTH_SHORT).show();
-		
 		return view;
 	}
 

@@ -1,5 +1,6 @@
 package com.yahoo.mobileacademy.carpool.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,9 @@ public class RoleSelectionActivity extends Activity {
 		setContentView(R.layout.activity_role_selection);
 		
 		setUpView();
+		
+		//ActionBar actionBar = getActionBar();
+	    //actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	private void setUpView() {

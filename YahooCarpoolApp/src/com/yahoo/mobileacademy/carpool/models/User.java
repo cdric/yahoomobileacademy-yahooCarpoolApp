@@ -1,73 +1,53 @@
 package com.yahoo.mobileacademy.carpool.models;
 
-import org.json.JSONObject;
-
+import com.parse.ParseClassName;
 import com.parse.ParseObject;
-import com.yahoo.mobileacademy.carpool.interfaces.ParseObjectSerializable;
 
 /**
  * Abstract model class for a User
  * @author CŽdric Lignier <cedric.lignier@free.fr>
  *
  */
-public abstract class User implements ParseObjectSerializable {
+@ParseClassName("User")
+public abstract class User extends ParseObject {
 	
-	// Member variables
-	private String name;
-	private String id;
-	private String email;
-	private String phoneNumber;
-
 	// Empty Constructor
-	public User() {}
+	public User() {
+		super(); 
+	}
 		
 	// Getters-Setters
 	
-	public String getId() {
-		return id;
+	public int getUserId() { 
+		return getInt("userId");
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(int id) {
+		put("userId", id);
 	}
 
 	public String getName() {
-		return name;
+		return getString("name");
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		put("name", name);
 	}
 
 	public String getEmail() {
-		return email;
+		return getString("email");
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		put("email", email);
 	}
 
 	public String getPhoneNumber() {
-		return phoneNumber;
+		return getString("phoneNumber");
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	@Override 
-	public ParseObject toParseObject() {
-		ParseObject user = new ParseObject("User");
-		user.put("id", getId());
-		user.put("name", getName());
-//		user.put("phoneNumber", getPhoneNumber());
-//		user.put("email", getEmail());
-		return user;
-	}
-	
-	public static User fromJSONObject(JSONObject jsonObject) {
-		//TODO
-		return null;
+		put("phoneNumber", phoneNumber);
 	}
 
 }

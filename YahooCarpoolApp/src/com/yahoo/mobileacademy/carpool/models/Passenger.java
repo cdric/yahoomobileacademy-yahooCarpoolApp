@@ -1,7 +1,9 @@
 package com.yahoo.mobileacademy.carpool.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.parse.ParseClassName;
-import com.parse.ParseObject;
 
 /**
  * Model class for a Passenger
@@ -9,17 +11,23 @@ import com.parse.ParseObject;
  * @author CŽdric Lignier <cedric.lignier@free.fr>
  *
  */
+@ParseClassName("Passenger")
 public class Passenger extends User {
 
-	// Empty Constructor
-	public Passenger() {}
-	
-	@Override
-	public ParseObject toParseObject() {
-		ParseObject user = super.toParseObject();
-		ParseObject passenger = new ParseObject("Passenger");
-		passenger.put("userRef", user);
-		return passenger;
-	}
+	// Provide an convenient way to setup a Ride with an empty list of passengers
+	public static final List<Passenger> EMPTY_VEHICULE = new ArrayList<Passenger>();
 
+	// Empty Constructor
+	public Passenger() {
+		super();
+	}
+	
+	public boolean isApproved() {
+		return getBoolean("hasBeenApproved");
+	}
+	
+	public void setIsApproved(boolean status) {
+		put("hasBeenApproved", status);
+	}
+	
 }

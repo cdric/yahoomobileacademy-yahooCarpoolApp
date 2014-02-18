@@ -11,6 +11,21 @@
         <item>8 persons</item>
     </string-array>
     
+    <string-array name="ride_offset_values">
+        <item>+/- 15 minutes</item>
+        <item>+/- 30 minutes</item>
+        <item>+/- 45 persons</item>
+        <item>+/- 60 minutes</item>
+        <item>+ 15 minutes</item>
+        <item>+ 30 minutes</item>
+        <item>+ 45 persons</item>
+        <item>+ 60 minutes</item>
+        <item>- 15 minutes</item>
+        <item>- 30 minutes</item>
+        <item>- 45 persons</item>
+        <item>- 60 minutes</item>
+    </string-array>
+    
     <string-array name="ride_destinations_values">
         <item>San Francisco, CA</item>
         <item>Palo Alto, CA</item>

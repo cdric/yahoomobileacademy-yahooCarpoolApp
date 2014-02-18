@@ -12,7 +12,7 @@
         android:id="@+id/tv_fragment_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Who wants to drive with you?"
+        android:text="Your notifications"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <RelativeLayout 
@@ -24,7 +24,7 @@
 	    android:paddingTop="@dimen/activity_vertical_margin" >
 	
 	    <ListView
-	        android:id="@+id/lvGuestNotifications"
+	        android:id="@+id/lvNotifications"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentBottom="true"

@@ -17,6 +17,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
+    <!--  Style that remove the action bar -->
     <style name="NoActionBar" parent="@android:style/Theme.Holo.Light">
 	    <item name="android:windowActionBar">false</item>
 	    <item name="android:windowNoTitle">true</item>

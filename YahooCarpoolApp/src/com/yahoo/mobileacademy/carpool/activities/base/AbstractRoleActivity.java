@@ -1,6 +1,13 @@
 package com.yahoo.mobileacademy.carpool.activities.base;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
 
@@ -32,7 +39,27 @@ public abstract class AbstractRoleActivity extends FragmentActivity {
 		// Update Action Bar to include user name
 		AuthenticatedUser user = UtilityClass.getAuthenticatedUser();
 		getActionBar().setTitle(getResources().getString(prefixId) + ": " + user.getName());
+				
+	}
+	
+	/**
+	 * Update the action bar icon with the image of the facebook user
+	 * 
+	 * @param facebookId the FacebookId for this user
+	 */
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+	protected void updateActionBarIconWithAuthUserFacebookProfileIcon(int facebookId) {
+		// Update Action Bar to replace icon with user profile icon
 		
+		Drawable myFacebookDrawable;
+		try {
+			Uri uri = Uri.parse(UtilityClass.getDisplayImageURLForFacebookId(facebookId));
+		    InputStream inputStream = getContentResolver().openInputStream(uri);
+		    myFacebookDrawable = Drawable.createFromStream(inputStream, uri.toString() );
+		    getActionBar().setIcon(myFacebookDrawable);
+		} catch (FileNotFoundException e) {
+			// Don't update the icon from the actino bar
+		}
 	}
 
 }

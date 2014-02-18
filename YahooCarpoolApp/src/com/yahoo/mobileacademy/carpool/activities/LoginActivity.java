@@ -41,15 +41,6 @@ public class LoginActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-//		if (savedInstanceState == null) {
-//	        // Add the fragment on initial activity setup
-//	        loginFragment = new LoginFragment();
-//	        getSupportFragmentManager().beginTransaction().add(android.R.id.content, loginFragment).commit();
-//	    } else {
-//	        // Or set the fragment from restored state info
-//	    	loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentById(android.R.id.content);
-//	    }
-		
 		// Check if there is a currently logged in user
 		// and they are linked to a Facebook account.
 		ParseUser currentUser = ParseUser.getCurrentUser();
@@ -65,17 +56,6 @@ public class LoginActivity extends FragmentActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
 	}
-	
-//	/**
-//	 * User clicks on the Skip Login button
-//	 * @param v
-//	 */
-//	public void onSkipLoginAction(View v) {
-//		
-//    	Intent i = new Intent(this, RoleSelectionActivity.class);
-//    	startActivity(i);
-//    	
-//	}
 	
 	public void onLoginButtonClicked(View v) {
 		progressDialog = ProgressDialog.show(
@@ -105,7 +85,6 @@ public class LoginActivity extends FragmentActivity {
 	private void showRoleSelectionActivity() {
 		
 		makeMeRequest();
-		
 		Intent i = new Intent(getBaseContext(), RoleSelectionActivity.class);
     	startActivity(i);
 		
@@ -138,6 +117,7 @@ public class LoginActivity extends FragmentActivity {
 								ParseUser currentUser = ParseUser
 										.getCurrentUser();
 								currentUser.put("profile", userProfile);
+								currentUser.put("facebookId", user.getId());
 								currentUser.saveInBackground();
 
 							} catch (JSONException e) {

@@ -27,24 +27,26 @@ import com.yahoo.mobileacademy.carpool.constants.AppConstants;
 import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
 import com.yahoo.mobileacademy.carpool.models.AuthenticatedUser;
 import com.yahoo.mobileacademy.carpool.models.Driver;
+import com.yahoo.mobileacademy.carpool.models.Passenger;
 import com.yahoo.mobileacademy.carpool.models.Ride;
 
 public class DriverRideDetailsFragment extends Fragment {
 	
-	private OnDriverRideDetailsFragmentListene listener;
+	private OnDriverRideDetailsFragmentListener listener;
 	
-	public interface OnDriverRideDetailsFragmentListene {
+	public interface OnDriverRideDetailsFragmentListener {
 		public void onSaveRideEvent(Ride r);
 		public void onDeleteRideEvent(ParseObject ride);
 		public void rideIsDefined(ParseObject ride);
+		public void onDriverRideDetailsFragmentReady(DriverRideDetailsFragment f);
 	}
 	
 	private EditText etDriverRideStart;
 	private Spinner spNbPassengers;
 	private Spinner spDriverDestination;
-	private ProfilePictureView pvUserProfilePicture;
+	//private ProfilePictureView pvUserProfilePicture;
 	
-	private ParseObject poRide;
+	private Ride poRide;
 	
 	private Button btnSave;
 	private Button btnDelete;
@@ -56,11 +58,12 @@ public class DriverRideDetailsFragment extends Fragment {
 	}
 	
 	@Override
-	public void onAttach(Activity activity) { super.onAttach(activity);
-	if (activity instanceof OnDriverRideDetailsFragmentListene) {
-	      listener = (OnDriverRideDetailsFragmentListene) activity;
+	public void onAttach(Activity activity) { 
+		super.onAttach(activity);
+		if (activity instanceof OnDriverRideDetailsFragmentListener) {
+		      listener = (OnDriverRideDetailsFragmentListener) activity;
 	    } else {
-	      throw new ClassCastException("Must implement " + OnDriverRideDetailsFragmentListene.class.getName());
+	      throw new ClassCastException("Must implement " + OnDriverRideDetailsFragmentListener.class.getName());
 	    }
 	}
 	
@@ -74,8 +77,8 @@ public class DriverRideDetailsFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		setUpFragmentView();
 		
-		AuthenticatedUser user = UtilityClass.getAuthenticatedUser();
-		pvUserProfilePicture.setProfileId(user.getFacebookId());
+		//AuthenticatedUser user = UtilityClass.getAuthenticatedUser();
+		//pvUserProfilePicture.setProfileId(String.valueOf(user.getFacebookId()));
 		
 		((DriverActivity) getActivity()).onTimePicked(Calendar.getInstance());
 		
@@ -84,22 +87,10 @@ public class DriverRideDetailsFragment extends Fragment {
 	}
 
 	private void setUpFragmentView() {
+	 
+		//pvUserProfilePicture = (ProfilePictureView) getActivity().findViewById(R.id.pv_userProfilePicture);
 		
-		spNbPassengers = (Spinner) UtilityClass.initSpinnerWithRightTextAlignment(
-				getActivity().getBaseContext(), 
-				(Spinner) getActivity().findViewById(R.id.sp_drivers_nb_passengers),
-				R.array.ride_occupency_values
-		);
-		
-		spDriverDestination = (Spinner) UtilityClass.initSpinnerWithRightTextAlignment(
-				getActivity().getBaseContext(), 
-				(Spinner) getActivity().findViewById(R.id.sp_driver_destination),
-				R.array.ride_destinations_values
-		);
-		  
-		pvUserProfilePicture = (ProfilePictureView) getActivity().findViewById(R.id.pv_userProfilePicture);
-		
-		etDriverRideStart = (EditText) getActivity().findViewById(R.id.et_driver_time_ride_start);
+		etDriverRideStart = (EditText) getView().findViewById(R.id.et_driver_time_ride_start);
 		etDriverRideStart.setOnClickListener(new OnClickListener() {
 			
 	        @Override
@@ -112,10 +103,24 @@ public class DriverRideDetailsFragment extends Fragment {
 	        
 	    }); 
 		
-		etDriverRideStart = (EditText) getActivity().findViewById(R.id.et_driver_time_ride_start);
+		etDriverRideStart = (EditText) getView().findViewById(R.id.et_driver_time_ride_start);
 		
-		btnSave = (Button) getActivity().findViewById(R.id.btnSave);
-		btnDelete = (Button) getActivity().findViewById(R.id.btnDelete);
+		spDriverDestination = (Spinner) UtilityClass.initSpinnerWithRightTextAlignment(
+				getActivity().getBaseContext(), 
+				(Spinner) getView().findViewById(R.id.sp_driver_destination),
+				R.array.ride_destinations_values
+		);
+		
+		spNbPassengers = (Spinner) UtilityClass.initSpinnerWithRightTextAlignment(
+				getActivity().getBaseContext(), 
+				(Spinner) getView().findViewById(R.id.sp_drivers_nb_passengers),
+				R.array.ride_occupency_values
+		);
+		
+		btnSave = (Button) getView().findViewById(R.id.btnSave);
+		btnDelete = (Button) getView().findViewById(R.id.btnDelete);
+		
+		listener.onDriverRideDetailsFragmentReady(this);
 		
 	}
 	
@@ -126,30 +131,24 @@ public class DriverRideDetailsFragment extends Fragment {
 		
 		AuthenticatedUser user = UtilityClass.getAuthenticatedUser();
 		
-		ParseQuery<ParseObject>userQuery = ParseQuery.getQuery("User");
-		userQuery.whereEqualTo("id", user.getFacebookId());
 		ParseQuery<ParseObject>driverQuery = ParseQuery.getQuery("Driver");
-		driverQuery = driverQuery.whereMatchesQuery("userRef", userQuery);
+		driverQuery.whereEqualTo("userId", user.getFacebookId());
 		ParseQuery<ParseObject>rideQuery = ParseQuery.getQuery("Ride");
-		rideQuery = rideQuery.whereMatchesQuery("driverRef", driverQuery);
+		rideQuery = rideQuery.whereMatchesQuery("driver", driverQuery);
 		rideQuery.findInBackground(new FindCallback<ParseObject>() {
 			
 			public void done(List<ParseObject> results, ParseException e) {
 		        AuthenticatedUser user = UtilityClass.getAuthenticatedUser();
-			    //Log.d("debug", "driverQuery inner join map on User.Facebookid=" + user.getFacebookId() + ": " + results.size());
 			    
 			    if (results.size() > 0) {
 			    	// Update ride details based on information stories in DB
 			    	
 			    	// Assuming only one result for users
-			    	poRide = results.get(0);
-			    	Ride ride = Ride.fromParseObject(poRide); 
+			    	poRide = (Ride) results.get(0);
 			    	
-			    	//Toast.makeText(getActivity().getBaseContext(), ride.getStartTime() + " / " + ride.getRideCapacity() + " / " + ride.getDestination(), Toast.LENGTH_SHORT).show();
-			    	
-			    	etDriverRideStart.setText(UtilityClass.formatDate(AppConstants.DRIVER_RIDE_DATE_FORMAT, ride.getStartTime()));
-			    	spNbPassengers.setSelection(ride.getRideCapacity() -1);
-			    	spDriverDestination.setSelection(UtilityClass.findValuePositionInArray(ride.getDestination(), getResources().getStringArray(R.array.ride_destinations_values)));
+			    	etDriverRideStart.setText(UtilityClass.formatDate(AppConstants.DRIVER_RIDE_DATE_FORMAT, poRide.getStartTime()));
+			    	spNbPassengers.setSelection(poRide.getRideCapacity() -1);
+			    	spDriverDestination.setSelection(UtilityClass.findValuePositionInArray(poRide.getDestination(), getResources().getStringArray(R.array.ride_destinations_values)));
 			    	
 			    	// Disable creation of new ride
 			    	setUIForRideEditMode(false);
@@ -170,16 +169,17 @@ public class DriverRideDetailsFragment extends Fragment {
 	public void onSaveRideAction(View v) {
 
 		//TODO: To encapsulate in a dedicated method
-		AuthenticatedUser user = UtilityClass.getAuthenticatedUser();
+		AuthenticatedUser authUser = UtilityClass.getAuthenticatedUser();
 		Driver d = new Driver();
-		d.setId(user.getFacebookId());
-		d.setName(user.getName()); // TODO: We should remove this and get it from the 
-		                           // Facebook API if possible as part of the user profile
+		d.setUserId(authUser.getFacebookId());
+		d.setName(authUser.getName()); // TODO: We should remove this and get it from the 
+		                               // Facebook API if possible as part of the user profile
 		
 		Ride r = new  Ride();
 		r.setDestination(spDriverDestination.getSelectedItem().toString());
 		r.setStartTime(UtilityClass.parseDate(AppConstants.DRIVER_RIDE_DATE_FORMAT, etDriverRideStart.getText().toString()));
 		r.setRideCapacity(spNbPassengers.getSelectedItemPosition()+1);
+		r.setPassengers(Passenger.EMPTY_VEHICULE);
 		r.setDriver(d);
 		
 		listener.onSaveRideEvent(r);

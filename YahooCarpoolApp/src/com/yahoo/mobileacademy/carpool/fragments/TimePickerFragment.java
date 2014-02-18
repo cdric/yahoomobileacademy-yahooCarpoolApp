@@ -1,6 +1,6 @@
 package com.yahoo.mobileacademy.carpool.fragments;
 
-import java.util.Calendar;
+import java.util.Calendar; 
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -13,9 +13,9 @@ import android.widget.TimePicker;
 public class TimePickerFragment extends DialogFragment implements
 		TimePickerDialog.OnTimeSetListener {
 	
-	private TimePickedListener mListener;
+	private TimePickedListener mListener; 
 
-	@Override
+	@Override   
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		// use the current time as the default values for the picker
 		final Calendar c = Calendar.getInstance();
