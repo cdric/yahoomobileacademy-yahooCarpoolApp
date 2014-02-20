@@ -1,7 +1,5 @@
 package com.yahoo.mobileacademy.carpool.fragments;
 
-import java.util.List;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,7 +16,6 @@ import com.yahoo.mobileacademy.carpool.R;
 import com.yahoo.mobileacademy.carpool.adapters.RideGuestsAdapter;
 import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
 import com.yahoo.mobileacademy.carpool.models.AuthenticatedUser;
-import com.yahoo.mobileacademy.carpool.models.Passenger;
 import com.yahoo.mobileacademy.carpool.models.Ride;
 
 public class DriverPassengerListFragment extends Fragment {
@@ -70,13 +67,13 @@ public class DriverPassengerListFragment extends Fragment {
 						Toast.makeText(getActivity().getBaseContext(), "It looks like you will be riding home on your own :-(", Toast.LENGTH_SHORT).show();
 						
 					} else {
-			    	   updatePassengerAdapter(((Ride) object).getPassengers());
+			    	   updatePassengerAdapter((Ride) object);
 					}
 			    	
 			    } else {
 			    	
-			    	// An error occurred
-					Toast.makeText(getActivity().getBaseContext(), "Can't fetch the list of passengers for your current ride. Please try agian later [Error: " + e.getMessage() + "]", Toast.LENGTH_SHORT).show();
+			    	// An error occurred OR No results were found
+					// Toast.makeText(getActivity().getBaseContext(), "Can't fetch the list of passengers for your current ride. Please try agian later [Error: " + e.getMessage() + "]", Toast.LENGTH_SHORT).show();
 				    	
 			    }
 				
@@ -96,16 +93,16 @@ public class DriverPassengerListFragment extends Fragment {
 	 *  - The method will create the adapter if it does not exist yet
 	 * @param passengers the List of Passengers to add
 	 */
-	private void updatePassengerAdapter(List<Passenger> passengers) {
+	private void updatePassengerAdapter(Ride ride) {
 		
 		RideGuestsAdapter adapter = (RideGuestsAdapter)lvPassengersList.getAdapter();
 		
 		if (adapter == null) {
-			adapter = new RideGuestsAdapter(getActivity().getBaseContext(), passengers);
+			adapter = new RideGuestsAdapter(getActivity().getBaseContext(), ride);
 			lvPassengersList.setAdapter(adapter);
 		} else {
 			adapter.clear();
-			adapter.addAll(passengers);
+			adapter.addAll(ride.getPassengers());
 		}
 
 	}

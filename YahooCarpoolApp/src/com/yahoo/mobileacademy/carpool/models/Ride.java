@@ -99,5 +99,16 @@ public class Ride extends ParseObject {
 		currentList.add(p);
 		setPassengers(currentList);
 	}
+
+	/**
+	 * Remove an existing passenger from this ride
+	 * @param p the passenger to remove
+	 */
+	public void removePassenger(Passenger p) {
+		List<Passenger> currentList = getPassengers();
+		currentList.remove(p);
+		setPassengers(currentList);
+		
+	}
 	
 }

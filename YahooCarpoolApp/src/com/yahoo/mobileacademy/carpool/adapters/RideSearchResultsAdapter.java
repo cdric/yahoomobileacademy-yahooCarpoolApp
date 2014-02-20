@@ -39,17 +39,13 @@ import com.yahoo.mobileacademy.carpool.models.Ride;
  */
 public class RideSearchResultsAdapter extends ArrayAdapter<Ride> {
 	
-	private View mView;
-	private Button btnRequestRide;
-	
 	public RideSearchResultsAdapter(Context context, List<Ride> objects) {
 		super(context, 0, objects);
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(int position, View mView, ViewGroup parent) {
 		
-		mView = convertView; 
 		if (mView == null) {
 
 			LayoutInflater inflatter = (LayoutInflater) getContext()
@@ -59,24 +55,27 @@ public class RideSearchResultsAdapter extends ArrayAdapter<Ride> {
 		}
 
 		final Ride ride = getItem(position);  
-
+		
+		final TextView nameView = (TextView) mView.findViewById(R.id.tvName);
+		final TextView startTime = (TextView) mView.findViewById(R.id.tvStartTime);
+		final ImageView imageView = (ImageView) mView.findViewById((R.id.ivProfile));
+		final TextView spaceLeft = (TextView) mView.findViewById(R.id.tvSpaceLeft);
+		final Button btnRequestRide = (Button) mView.findViewById(R.id.btnRequestRide);
+		
 		ride.getDriver().fetchIfNeededInBackground(new GetCallback<Driver>() {
 			
 	        public void done(Driver driver, ParseException e) {
-	        	TextView nameView = (TextView) mView.findViewById(R.id.tvName);
+	        	
 	            String formattedName = "<b>" + driver.getName() + "</b>";
-	            nameView.setText(Html.fromHtml(formattedName));   
-	            
-	    		TextView startTime = (TextView) mView.findViewById(R.id.tvStartTime);
+	            nameView.setText(Html.fromHtml(formattedName));   	      
+	    		
 	    		Date rideStartTime = ride.getStartTime(); 
 	    		String formattedStartTime = "<i>Leaving at: </i>" + UtilityClass.formatDate(AppConstants.DRIVER_RIDE_DATE_FORMAT, rideStartTime)
 	    				+ "<br>(in " + UtilityClass.computeDifferentBetweenTwoDates(new Date(), rideStartTime, AppConstants.PERIODFORMATTER_HOURS_AND_MINUTES)+ ")";
 	    		startTime.setText(Html.fromHtml(formattedStartTime));  
 	    		
-	    		ImageView imageView = (ImageView) mView.findViewById((R.id.ivProfile));
 	    		ImageLoader.getInstance().displayImage(UtilityClass.getDisplayImageURLForFacebookId(driver.getUserId()), imageView);
 	    		
-	    		TextView spaceLeft = (TextView) mView.findViewById(R.id.tvSpaceLeft);
 	    		String formattedSpaceLeft = null;
 	    		if (Ride.isRideFull(ride)) {
 	    			formattedSpaceLeft = "<b>This ride is already full</b>";
@@ -88,8 +87,6 @@ public class RideSearchResultsAdapter extends ArrayAdapter<Ride> {
 	        		}
 	    		}
 	    		spaceLeft.setText(Html.fromHtml(formattedSpaceLeft));
-	    		
-	    		btnRequestRide = (Button) mView.findViewById(R.id.btnRequestRide);
 	    		
 	    		// Storing the userId inside the imageView Tag property
 	    		btnRequestRide.setTag(driver.getUserId()); 
@@ -107,6 +104,8 @@ public class RideSearchResultsAdapter extends ArrayAdapter<Ride> {
 							// Fetch the userId for this search result
 							int userId = (Integer) v.getTag();
 							new FetchDriverParseObject().execute(userId);
+							
+							btnRequestRide.setEnabled(false);
 							
 							// Update with you as a potential passenger
 							
@@ -203,9 +202,6 @@ public class RideSearchResultsAdapter extends ArrayAdapter<Ride> {
 					
 				}
 			});
-			
-			btnRequestRide.setEnabled(false);
-			
 			
 		}
 

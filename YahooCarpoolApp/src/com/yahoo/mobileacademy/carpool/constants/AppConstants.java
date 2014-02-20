@@ -25,8 +25,13 @@ public class AppConstants {
 	    .appendSuffix(" minute", " minutes")
 	    .toFormatter();
 
-	// Notification key for request to be added to an existing ride
+	// Notification keys
+	// Request to be added to an existing ride
 	public static final int NOTIFICATION_TYPE_REQUEST_RIDE = 201;
+	// Ride has been accepted
+	public static final int NOTIFICATION_TYPE_RIDE_ACCEPTED = 202;
+	// Ride has been rejected
+	public static final int NOTIFICATION_TYPE_RIDE_REJECTED = 203;
    
 }
 

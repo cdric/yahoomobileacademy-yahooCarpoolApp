@@ -48,7 +48,6 @@ public class LoginActivity extends FragmentActivity {
 			// Go to the user info activity
 			showRoleSelectionActivity();
 		}
-		
 	}
 	
 	@Override
@@ -83,11 +82,9 @@ public class LoginActivity extends FragmentActivity {
 	}
 	
 	private void showRoleSelectionActivity() {
-		
 		makeMeRequest();
 		Intent i = new Intent(getBaseContext(), RoleSelectionActivity.class);
     	startActivity(i);
-		
 	}
 	
 	private void makeMeRequest() {

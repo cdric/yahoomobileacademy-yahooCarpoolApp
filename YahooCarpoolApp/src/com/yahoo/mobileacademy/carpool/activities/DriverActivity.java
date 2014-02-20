@@ -6,6 +6,7 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.View;
@@ -39,8 +40,6 @@ public class DriverActivity extends AbstractRoleActivity
 	
 	private Tab tabRide, tabNotifications;
 	private String tagRide, tagNotifications;	
-		
-	private ParseObject poRide;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +52,10 @@ public class DriverActivity extends AbstractRoleActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.driver, menu);
-		
         return true;
     }
+    
+    
     
    private void setUpActivity() {
 		
@@ -165,11 +165,11 @@ public class DriverActivity extends AbstractRoleActivity
 		ride.deleteInBackground();
 	}
 
-	@Override
-	public void rideIsDefined(ParseObject ride) {
-		poRide = ride;
-		//setUpActionBar(true); 
-	}
+//	@Override
+//	public void rideIsDefined(ParseObject ride) {
+//		//poRide = ride;
+//		//setUpActionBar(true); 
+//	}
 
 	@Override
 	public void onDriverRideDetailsFragmentReady(DriverRideDetailsFragment f) {
@@ -182,5 +182,12 @@ public class DriverActivity extends AbstractRoleActivity
 	public void onGenericNotificationsFragmentReady(GenericNotificationsFragment f) {
 		fragmentNotifications = f;	
 	}
+
+//	@Override
+//	public void onDriverRideDetailsFragmentReleased(DriverRideDetailsFragment f) {
+//	    FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
+//	    ft.remove(f);
+//	    ft.commit();
+//	}
 	    
 }

@@ -1,6 +1,5 @@
 package com.yahoo.mobileacademy.carpool.activities;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,10 +42,9 @@ public class RoleSelectionActivity extends Activity {
 	 * @param v the button
 	 */
 	public void onDriverAction(View v) {
-		
 		Intent i = new Intent(this, DriverActivity.class);
-		startActivity(i);
-		
+		startActivity(i); 
+		//overridePendingTransition(android.R.anim.slide_out_right, android.R.anim.slide_in_left);              
 	}
 	
 	/**
@@ -54,10 +52,8 @@ public class RoleSelectionActivity extends Activity {
 	 * @param v the button
 	 */
 	public void onPassengerAction(View v) {
-	
 		Intent i = new Intent(this, PassengerActivity.class);
 		startActivity(i);
-		
 	}
 	
 	// --------------------------

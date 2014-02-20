@@ -29,6 +29,8 @@ TODO
     - Polish UI across the board
        - Style button and layouts
        - Update ActionBar Tabs icons
+    - Add one activity animation / one fragment animation
+    - Style action bar
  - Nice to have for demo-day
     - Support offline mode 
     - Protect app again unavailable / failed API requests
@@ -38,12 +40,17 @@ TODO
  - Update the action bar for both driver and passenger to include the Facebook icon of the authenticated user
     - FIXIT: Code is there but the actionBar does not render. 
 
+Version 0.03 (2/19/2014)
+ - Implement story for the Driver to accept/reject passengers for his ride
+ - Implement a RotateImageButton class that leverage an animation to build a button from a image that will be rotated by 180 degrees
+
 Version 0.02 (2/17/2014)
  - Fix layout design issues (like misalignments of views)
  - Implement Passenger's user stories
    - User can search for a ride
    - User can send a request to book a ride
- - Implement Notification for both driver and passengers
+   - User can read his/her notifications
+ - Implement a Generic Notifications view that is being reused by both drivers and passengers activities
  - Simplify the Driver view into two tabs instead of three by merging fragments together
    - The main tab contain bot the ride and current passenger for the ride
  - Code improvements

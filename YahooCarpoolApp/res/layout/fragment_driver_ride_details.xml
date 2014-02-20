@@ -3,15 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"  >
-
-<!--     <com.facebook.widget.ProfilePictureView -->
-<!--                 android:id="@+id/pv_userProfilePicture" -->
-<!--                 android:layout_height="wrap_content" -->
-<!--                 android:layout_width="wrap_content" -->
-<!--                 android:layout_gravity="left" -->
-<!--                 android:gravity="center_horizontal" -->
-<!--                 android:paddingBottom="10dp" -->
-<!--                 facebook:preset_size="normal" /> -->
     
     <TextView
         android:id="@+id/tv_fragment_title"
@@ -94,17 +85,6 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/btnSave"
-            android:layout_alignBottom="@+id/btnSave"
-            android:layout_alignParentRight="true"
-            android:enabled="false"
-            android:onClick="onDeleteRideAction"
-            android:text="@string/btnDelete" />
-
-        <Button
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -112,6 +92,17 @@
             android:layout_alignParentTop="true"
             android:onClick="onSaveRideAction"
             android:text="@string/btnLockRide" />
+        
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/btnSave"
+            android:layout_alignTop="@+id/btnSave"
+            android:layout_toRightOf="@id/btnSave"
+            android:enabled="false"
+            android:onClick="onDeleteRideAction"
+            android:text="@string/btnDelete" />
 
     </RelativeLayout>
 

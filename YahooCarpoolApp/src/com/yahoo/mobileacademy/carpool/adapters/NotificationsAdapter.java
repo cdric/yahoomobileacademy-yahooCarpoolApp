@@ -29,7 +29,6 @@ import com.yahoo.mobileacademy.carpool.models.Notification;
  */
 public class NotificationsAdapter extends ArrayAdapter<Notification> {
 	
-	View mView;
 	NotificationsAdapter mAdapter;
 	
 	public NotificationsAdapter(Context context, List<Notification> objects) {
@@ -37,8 +36,7 @@ public class NotificationsAdapter extends ArrayAdapter<Notification> {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		mView = convertView;
+	public View getView(int position, View mView, ViewGroup parent) {
 		mAdapter = this;
 		
 		if (mView == null) {
@@ -99,34 +97,7 @@ public class NotificationsAdapter extends ArrayAdapter<Notification> {
 		});
 		
 	   return mView;
-	   
-//	   final Notification notification = getItem(position);
-//		
-//		/* make the API call */
-//		new Request(
-//			ParseFacebookUtils.getSession(),
-//		    "/" + notification.getFromUserId(),
-//		    null,
-//		    HttpMethod.GET,
-//		    new Request.Callback() {
-//		        public void onCompleted(Response response) {
-//		        	
-//		            String userName = (String) response.getGraphObject().getProperty("name");
-//		        	
-//		        	TextView nameView = (TextView) mView.findViewById(R.id.tvName);
-//				    String formattedName = "<b>" + userName + "</b>";
-//					nameView.setText(Html.fromHtml(formattedName));
-//							
-//					ImageView imageView = (ImageView) mView.findViewById((R.id.ivProfile));
-//					ImageLoader.getInstance().displayImage(
-//					   UtilityClass.getDisplayImageURLForFacebookId(notification.getFromUserId()), imageView);
-//
-//		        }
-//		    }
-//		).executeAsync();
-//				
-//	   return mView;
-
+	  
 	}
 
 }

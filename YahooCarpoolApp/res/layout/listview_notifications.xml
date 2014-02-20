@@ -23,11 +23,11 @@
     <TextView
         android:id="@+id/tvNotificationMessage"
         android:layout_toRightOf="@id/ivProfile"
+        android:layout_toLeftOf="@id/btnDismissNotification"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textSize="10sp"
-        android:layout_toLeftOf="@id/btnDismissNotification"
+        android:textSize="12sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

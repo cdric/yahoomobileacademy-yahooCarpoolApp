@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.facebook.widget.ProfilePictureView;
+import com.activeandroid.util.Log;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -31,20 +32,20 @@ import com.yahoo.mobileacademy.carpool.models.Passenger;
 import com.yahoo.mobileacademy.carpool.models.Ride;
 
 public class DriverRideDetailsFragment extends Fragment {
-	
+
 	private OnDriverRideDetailsFragmentListener listener;
 	
 	public interface OnDriverRideDetailsFragmentListener {
 		public void onSaveRideEvent(Ride r);
 		public void onDeleteRideEvent(ParseObject ride);
-		public void rideIsDefined(ParseObject ride);
+		//public void rideIsDefined(ParseObject ride);
 		public void onDriverRideDetailsFragmentReady(DriverRideDetailsFragment f);
+		//public void onDriverRideDetailsFragmentReleased(DriverRideDetailsFragment f);
 	}
 	
 	private EditText etDriverRideStart;
 	private Spinner spNbPassengers;
 	private Spinner spDriverDestination;
-	//private ProfilePictureView pvUserProfilePicture;
 	
 	private Ride poRide;
 	
@@ -67,8 +68,8 @@ public class DriverRideDetailsFragment extends Fragment {
 	    }
 	}
 	
-	public void onDetach() { 
-		super.onDetach(); 
+	public void onDetach() {
+		super.onDetach();
 		listener = null;
 	}
 
@@ -153,7 +154,7 @@ public class DriverRideDetailsFragment extends Fragment {
 			    	// Disable creation of new ride
 			    	setUIForRideEditMode(false);
 			    	
-			    	listener.rideIsDefined(poRide);
+			    	//listener.rideIsDefined(poRide);
 			    	
 			    } else {
 			    	// No ride have been define for this user 
