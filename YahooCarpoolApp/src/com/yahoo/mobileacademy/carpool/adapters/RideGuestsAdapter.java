@@ -187,7 +187,7 @@ public class RideGuestsAdapter extends ArrayAdapter<Passenger> {
 		// Create notification
 		Notification notification = new Notification();
 		notification.setFromUserId(authUser.getFacebookId());
-		notification.setToUserId(Integer.valueOf(passenger.getUserId()));
+		notification.setToUserId(passenger.getUserId());
 		notification.setHasBeenRead(false);
 		notification.setNotificationMessageForRecipient(notificationMessage);
 		notification.setNotificationType(notificationKey);

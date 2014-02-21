@@ -14,7 +14,7 @@ public class AuthenticatedUser {
 	private String name;
 	private String email;
 	private String phoneNumber;
-	private int facebookId;
+	private String facebookId;
 
 	// Getters-Setters
 	
@@ -42,11 +42,11 @@ public class AuthenticatedUser {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public int getFacebookId() {
+	public String getFacebookId() {
 		return facebookId;
 	}
 
-	public void setFacebookId(int facebookId) {
+	public void setFacebookId(String facebookId) {
 		this.facebookId = facebookId;
 	}
 
@@ -55,7 +55,7 @@ public class AuthenticatedUser {
 		try {
 			
 			user.setName(jsonObject.getString("name"));
-			user.setFacebookId(jsonObject.getInt("facebookId"));
+			user.setFacebookId(jsonObject.getString("facebookId"));
 			
 			// Not available through the Facebook Graph API
 			// user.setEmail(jsonObject.getString("first_name") + " AT facebook.com");

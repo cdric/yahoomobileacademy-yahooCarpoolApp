@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -48,7 +49,7 @@ public abstract class AbstractRoleActivity extends FragmentActivity {
 	 * @param facebookId the FacebookId for this user
 	 */
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-	protected void updateActionBarIconWithAuthUserFacebookProfileIcon(int facebookId) {
+	protected void updateActionBarIconWithAuthUserFacebookProfileIcon(String facebookId) {
 		// Update Action Bar to replace icon with user profile icon
 		
 		Drawable myFacebookDrawable;
@@ -61,5 +62,36 @@ public abstract class AbstractRoleActivity extends FragmentActivity {
 			// Don't update the icon from the actino bar
 		}
 	}
+	
+    /**
+     * Prepare for a progress bar Dialog
+     */
+    protected void setUpProgressBarDialog() {
+    	
+		pbDialog = new ProgressDialog(this);
+		pbDialog.setCancelable(true);
+		pbDialog.setMessage("Updating ...");
+		pbDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		//pbDialog.setProgress(0);
+		//pbDialog.setMax(100);
+		//pbDialog.setTitle("Please wait...");
+		
+	}
+    
+	protected ProgressDialog pbDialog;
+    
+    /**
+     * Show the progress bar dialog
+     */
+    protected void showProgressBarDialog() {
+    	pbDialog.show();
+    }
+    
+    /**
+     * Hide the progress bar dialog
+     */
+    protected void hideProgressBarDialog() {
+    	pbDialog.hide();
+    }
 
 }

@@ -4,11 +4,11 @@ import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -17,13 +17,12 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.yahoo.mobileacademy.carpool.R;
 import com.yahoo.mobileacademy.carpool.adapters.NotificationsAdapter;
-import com.yahoo.mobileacademy.carpool.fragments.DriverRideDetailsFragment.OnDriverRideDetailsFragmentListener;
+import com.yahoo.mobileacademy.carpool.fragments.base.AbstractBaseFragment;
 import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
 import com.yahoo.mobileacademy.carpool.models.AuthenticatedUser;
 import com.yahoo.mobileacademy.carpool.models.Notification;
-import com.yahoo.mobileacademy.carpool.models.Ride;
 
-public class GenericNotificationsFragment extends Fragment {
+public class GenericNotificationsFragment extends AbstractBaseFragment {
 		
 	private OnGenericNotificationsFragment listener;
 	
@@ -64,6 +63,8 @@ public class GenericNotificationsFragment extends Fragment {
 
 	private void loadNotifications() {
 		
+		showProgressBar();
+		
 		AuthenticatedUser authUser = UtilityClass.getAuthenticatedUser();
 		
 		ParseQuery<ParseObject>rideQuery = ParseQuery.getQuery("Notification");
@@ -81,6 +82,9 @@ public class GenericNotificationsFragment extends Fragment {
 			    	// No notifications exits for this user
 			    	Toast.makeText(getActivity().getBaseContext(), "No notifications. All good!", Toast.LENGTH_SHORT).show();
 			    }
+				
+				hideProgressBar();
+				
 			}
 			
 		});
@@ -89,7 +93,7 @@ public class GenericNotificationsFragment extends Fragment {
 
 	private void setupFragmentView() {
 		lvNotifications = (ListView) getActivity().findViewById(R.id.lvNotifications);
-		listener.onGenericNotificationsFragmentReady(this); 
+		listener.onGenericNotificationsFragmentReady(this);
 	}
 
 
@@ -104,7 +108,7 @@ public class GenericNotificationsFragment extends Fragment {
 		NotificationsAdapter adapter = (NotificationsAdapter)lvNotifications.getAdapter();
 		
 		if (adapter == null) {
-			adapter = new NotificationsAdapter(getActivity().getBaseContext(), notifications);
+			adapter = new NotificationsAdapter(this, notifications);
 			lvNotifications.setAdapter(adapter);
 		} else {
 			adapter.addAll(notifications);

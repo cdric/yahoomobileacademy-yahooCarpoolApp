@@ -24,7 +24,7 @@ Release notes
 
 TODO
  - Must have for demo-day
-    - Implement progress bars all across the board
+    - Implement progress bars for passenger fragment
     - Implement empty notification view (by displaying a text view instead of a list item view)
     - Polish UI across the board
        - Style button and layouts
@@ -39,6 +39,13 @@ TODO
        - Move all strings into res folder
  - Update the action bar for both driver and passenger to include the Facebook icon of the authenticated user
     - FIXIT: Code is there but the actionBar does not render. 
+
+Version 0.04 (2/20/2014)
+ - Bug fixes
+    - Fix bug prevent to store large FacebookId into Parse
+    - Fix bug preventing users to access all data store into Parse
+ - Implement progress bars for notification and ride search fragments
+    - Create AsyncTasks to put process outside of the main UI Thread
 
 Version 0.03 (2/19/2014)
  - Implement story for the Driver to accept/reject passengers for his ride

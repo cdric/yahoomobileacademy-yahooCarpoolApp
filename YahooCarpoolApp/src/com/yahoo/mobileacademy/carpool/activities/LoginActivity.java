@@ -101,10 +101,10 @@ public class LoginActivity extends FragmentActivity {
 								userProfile.put("name", user.getName());
 								userProfile.put("first_name", user.getFirstName());
 								userProfile.put("last_name", user.getLastName());
-								if (user.getLocation().getProperty("name") != null) {
-									userProfile.put("location", (String) user
-											.getLocation().getProperty("name"));
-								}
+//								if (user.getLocation().getProperty("name") != null) {
+//									userProfile.put("location", (String) user
+//											.getLocation().getProperty("name"));
+//								}
 								if (user.getProperty("gender") != null) {
 									userProfile.put("gender",
 											(String) user.getProperty("gender"));

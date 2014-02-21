@@ -46,6 +46,7 @@ public class DriverActivity extends AbstractRoleActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver);
         setUpActivity();
+        setUpProgressBarDialog();
     }
 
     @Override

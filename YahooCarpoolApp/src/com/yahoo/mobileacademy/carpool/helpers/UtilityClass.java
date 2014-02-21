@@ -15,6 +15,7 @@ import android.net.NetworkInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.activeandroid.util.Log;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -98,7 +99,7 @@ public class UtilityClass {
 	 */
 	public static String computeDifferentBetweenTwoDates(Date startTime, Date endTime, PeriodFormatter formatter) {
 		
-		Period p = new Period(startTime.getTime(), endTime.getTime());
+		Period p = new Period(endTime.getTime(), startTime.getTime());
 		return formatter.print(p);
 		
 	}
@@ -159,8 +160,10 @@ public class UtilityClass {
 	 * Generate the URL to retrive the Facebook Profile Image
 	 * @param userId the FacebookId to generate the URL for
 	 */
-	public static String getDisplayImageURLForFacebookId(int userId) {
-		return "http://graph.facebook.com/"+String.valueOf(userId)+"/picture?type=large";
+	public static String getDisplayImageURLForFacebookId(String userId) {
+		String image = "http://graph.facebook.com/"+ userId +"/picture?type=large";
+		Log.d("debug", "getDisplayImageURLForFacebookId: " + image);
+		return image;
 	}
 	
 }

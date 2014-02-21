@@ -23,6 +23,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 import com.yahoo.mobileacademy.carpool.R;
+import com.yahoo.mobileacademy.carpool.adapters.models.RideSearchResult;
+import com.yahoo.mobileacademy.carpool.asynctasks.FetchDriverParseObjectDataAsyncTask;
 import com.yahoo.mobileacademy.carpool.constants.AppConstants;
 import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
 import com.yahoo.mobileacademy.carpool.models.AuthenticatedUser;
@@ -37,9 +39,9 @@ import com.yahoo.mobileacademy.carpool.models.Ride;
  * @author CŽdric Lignier <cedric.lignier@free.fr>
  *
  */
-public class RideSearchResultsAdapter extends ArrayAdapter<Ride> {
+public class RideSearchResultsAdapter extends ArrayAdapter<RideSearchResult> {
 	
-	public RideSearchResultsAdapter(Context context, List<Ride> objects) {
+	public RideSearchResultsAdapter(Context context, List<RideSearchResult> objects) {
 		super(context, 0, objects);
 	}
 
@@ -54,163 +56,82 @@ public class RideSearchResultsAdapter extends ArrayAdapter<Ride> {
 
 		}
 
-		final Ride ride = getItem(position);  
+		final RideSearchResult result = getItem(position);  
 		
-		final TextView nameView = (TextView) mView.findViewById(R.id.tvName);
-		final TextView startTime = (TextView) mView.findViewById(R.id.tvStartTime);
-		final ImageView imageView = (ImageView) mView.findViewById((R.id.ivProfile));
-		final TextView spaceLeft = (TextView) mView.findViewById(R.id.tvSpaceLeft);
+		TextView nameView = (TextView) mView.findViewById(R.id.tvName);
+		TextView startTime = (TextView) mView.findViewById(R.id.tvStartTime);
+		ImageView imageView = (ImageView) mView.findViewById((R.id.ivProfile));
+		TextView spaceLeft = (TextView) mView.findViewById(R.id.tvSpaceLeft);
 		final Button btnRequestRide = (Button) mView.findViewById(R.id.btnRequestRide);
+			        	
+        String formattedName = "<b>" + result.getDriverName() + "</b>";
+        nameView.setText(Html.fromHtml(formattedName));   	      
 		
-		ride.getDriver().fetchIfNeededInBackground(new GetCallback<Driver>() {
-			
-	        public void done(Driver driver, ParseException e) {
-	        	
-	            String formattedName = "<b>" + driver.getName() + "</b>";
-	            nameView.setText(Html.fromHtml(formattedName));   	      
-	    		
-	    		Date rideStartTime = ride.getStartTime(); 
-	    		String formattedStartTime = "<i>Leaving at: </i>" + UtilityClass.formatDate(AppConstants.DRIVER_RIDE_DATE_FORMAT, rideStartTime)
-	    				+ "<br>(in " + UtilityClass.computeDifferentBetweenTwoDates(new Date(), rideStartTime, AppConstants.PERIODFORMATTER_HOURS_AND_MINUTES)+ ")";
-	    		startTime.setText(Html.fromHtml(formattedStartTime));  
-	    		
-	    		ImageLoader.getInstance().displayImage(UtilityClass.getDisplayImageURLForFacebookId(driver.getUserId()), imageView);
-	    		
-	    		String formattedSpaceLeft = null;
-	    		if (Ride.isRideFull(ride)) {
-	    			formattedSpaceLeft = "<b>This ride is already full</b>";
-	    		} else {
-	        		if (ride.getPassengers() != null) {
-	        			formattedSpaceLeft = "<i>Vehicule capacity:</i> " + ride.getPassengers().size() + " / " + ride.getRideCapacity();
-	        		} else {
-	        			formattedSpaceLeft = "<i>Vehicule capacity:</i> 0 / " + ride.getRideCapacity();
-	        		}
-	    		}
-	    		spaceLeft.setText(Html.fromHtml(formattedSpaceLeft));
-	    		
-	    		// Storing the userId inside the imageView Tag property
-	    		btnRequestRide.setTag(driver.getUserId()); 
-	    		
-	    		if (Ride.isRideFull(ride)) {
-	    			btnRequestRide.setEnabled(false);
-	    		} else {
-	    			// Register onClickListenerEvent
-	    			btnRequestRide.setEnabled(true);
-	    			btnRequestRide.setOnClickListener(new OnClickListener() {
+		Date rideStartTime = result.getRideStartTime(); 
+		String formattedStartTime = "<i>Leaving at: </i>" + UtilityClass.formatDate(AppConstants.DRIVER_RIDE_DATE_FORMAT, rideStartTime)
+				+ "<br>(in " + UtilityClass.computeDifferentBetweenTwoDates(new Date(), rideStartTime, AppConstants.PERIODFORMATTER_HOURS_AND_MINUTES)+ ")";
+		startTime.setText(Html.fromHtml(formattedStartTime));  
+		
+		ImageLoader.getInstance().displayImage(UtilityClass.getDisplayImageURLForFacebookId(result.getDriverUserId()), imageView);
+		
+		String formattedSpaceLeft = null;
+		if (result.isRideFull()) {
+			formattedSpaceLeft = "<b>This ride is already full</b>";
+		} else {
+    		if (result.getRide().getPassengers() != null) {
+    			formattedSpaceLeft = "<i>Vehicule capacity:</i> " + result.getRide().getPassengers().size() + " / " + result.getRide().getRideCapacity();
+    		} else {
+    			formattedSpaceLeft = "<i>Vehicule capacity:</i> 0 / " + result.getRide().getRideCapacity();
+    		}
+		}
+		spaceLeft.setText(Html.fromHtml(formattedSpaceLeft));
+		
+		// Storing the userId inside the imageView Tag property
+		btnRequestRide.setTag(result.getDriverUserId()); 
+		
+		if (result.isRideFull()) {
+			btnRequestRide.setEnabled(false);
+		} else {
+			// Register onClickListenerEvent
+			btnRequestRide.setEnabled(true);
+			btnRequestRide.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+					// Fetch the userId for this search result
+					String userId = (String) v.getTag();
+					new FetchDriverParseObjectDataAsyncTask().execute(userId);
+					
+					btnRequestRide.setEnabled(false);
+					
+					// Update with you as a potential passenger
+					
+					AuthenticatedUser authUser = UtilityClass.getAuthenticatedUser();
+					
+					// Create Passenger object
+					Passenger passenger = new Passenger();
+					passenger.setUserId(authUser.getFacebookId());
+					passenger.setName(authUser.getName()); // TODO: We should remove this and get it from the 
+					                               // Facebook API if possible as part of the user profile
+					passenger.setIsApproved(false);
+					
+					result.getRide().addPassenger(passenger);
+					result.getRide().saveInBackground(new SaveCallback() {
 						
 						@Override
-						public void onClick(View v) {
+						public void done(ParseException e) {
 							
-							// Fetch the userId for this search result
-							int userId = (Integer) v.getTag();
-							new FetchDriverParseObject().execute(userId);
-							
-							btnRequestRide.setEnabled(false);
-							
-							// Update with you as a potential passenger
-							
-							AuthenticatedUser authUser = UtilityClass.getAuthenticatedUser();
-							
-							// Create Passenger object
-							Passenger passenger = new Passenger();
-							passenger.setUserId(authUser.getFacebookId());
-							passenger.setName(authUser.getName()); // TODO: We should remove this and get it from the 
-							                               // Facebook API if possible as part of the user profile
-							passenger.setIsApproved(false);
-							
-							ride.addPassenger(passenger);
-							ride.saveInBackground(new SaveCallback() {
-								
-								@Override
-								public void done(ParseException e) {
-									
-									Toast.makeText(getContext(), "Your request has been successfully saved", Toast.LENGTH_SHORT).show();
-									
-								}
-							});
+							Toast.makeText(getContext(), "Your request has been successfully saved", Toast.LENGTH_SHORT).show();
 							
 						}
 					});
-	    		}
-	        }
-	        
-	    });
-		
-		return mView;
-	}
-	
-	/**
-	 * Retrieve a Driver object based on it's id
-	 * @author CŽdric Lignier <cedric.lignier@free.fr>
-	 *
-	 */
-	private class FetchDriverParseObject extends AsyncTask<Integer, Void, Driver> {
-
-		private Driver driver;
-		private int userId;
-		
-		@Override
-		protected Driver doInBackground(Integer... params) {
-
-			driver = null;
-			userId =  params[0];
-			
-			ParseQuery<ParseObject> query = ParseQuery.getQuery("Driver");
-			query.whereEqualTo("userId", userId);
-			
-			List<ParseObject> queryResult;
-			
-			try {
-				queryResult = query.find(); // Blocking thread
-				
-			    if (queryResult.size() > 0) {
-			    	
-			    	// Assuming only one result
-			    	driver = (Driver)queryResult.get(0);
-			    	
-			    } 
-			    
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-							
-			return driver;
-		}
-		
-		@Override
-	    protected void onPostExecute(Driver result) {
-			
-			AuthenticatedUser authUser = UtilityClass.getAuthenticatedUser();
-			String messageForRecipient = 
-					authUser.getName() + " has requested to be part of your ride. Please review the list of pending guests for your ride to accept this user.";	
-			
-			// Create notification
-			Notification notification = new Notification();
-			notification.setFromUserId(authUser.getFacebookId());
-			notification.setToUserId(Integer.valueOf(driver.getUserId()));
-			notification.setHasBeenRead(false);
-			notification.setNotificationMessageForRecipient(messageForRecipient);
-			notification.setNotificationType(AppConstants.NOTIFICATION_TYPE_REQUEST_RIDE);
-			notification.saveInBackground(new SaveCallback() {
-				
-				@Override
-				public void done(ParseException e) {
-					
-					Toast.makeText(getContext(), "We sent a notification to " //+ driver.getUserId() 
-							+ "" + driver.getName() + ""
-	 						+ ". You should received a notification one the status of this ride.", Toast.LENGTH_SHORT).show();
 					
 				}
 			});
-			
 		}
-
-	    @Override
-	    protected void onPreExecute() {}
-
-	    @Override
-	    protected void onProgressUpdate(Void... values) {}
-
+		
+		return mView;
 	}
 
 }

@@ -18,19 +18,19 @@ public class Notification extends ParseObject {
 		
 	// Getters-Setters
 	
-	public int getFromUserId() {
-		return getInt("fromUserId");
+	public String getFromUserId() {
+		return getString("fromUserId");
 	}
 
-	public void setFromUserId(int id) {
+	public void setFromUserId(String id) {
 		put("fromUserId", id);
 	}
 	
-	public int getToUserId() {
-		return getInt("toUserId");
+	public String getToUserId() {
+		return getString("toUserId");
 	}
 
-	public void setToUserId(int userId) {
+	public void setToUserId(String userId) {
 		put("toUserId", userId);
 	}
 	

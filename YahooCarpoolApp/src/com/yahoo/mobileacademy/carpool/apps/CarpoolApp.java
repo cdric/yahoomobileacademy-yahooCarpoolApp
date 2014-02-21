@@ -58,7 +58,9 @@ public class CarpoolApp extends com.activeandroid.app.Application {
 		Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
 		ParseFacebookUtils.initialize(getResources().getString(R.string.app_id));
 		ParseUser.enableAutomaticUser();
-		ParseACL defaultACL = new ParseACL();		
+		ParseACL defaultACL = new ParseACL();	
+		defaultACL.setPublicReadAccess(true);
+		defaultACL.setPublicWriteAccess(true);
 		ParseACL.setDefaultACL(defaultACL, true); 
 		// Setup push notification 
 		PushService.setDefaultPushCallback(this, DriverActivity.class); 

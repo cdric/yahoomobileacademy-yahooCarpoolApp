@@ -17,6 +17,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp" >
-    </FrameLayout>
+    </FrameLayout>    
 
 </RelativeLayout>

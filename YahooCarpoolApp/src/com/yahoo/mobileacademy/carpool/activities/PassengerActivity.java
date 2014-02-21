@@ -4,11 +4,13 @@ import java.util.Calendar;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.yahoo.mobileacademy.carpool.R;
 import com.yahoo.mobileacademy.carpool.activities.base.AbstractRoleActivity;
@@ -39,9 +41,10 @@ public class PassengerActivity extends AbstractRoleActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passenger);
         setUpActivity();
+        setUpProgressBarDialog();
     }
-    
-    private void setUpActivity() {
+
+	private void setUpActivity() {
     	
     	AuthenticatedUser authUser = UtilityClass.getAuthenticatedUser();
     	
@@ -87,6 +90,8 @@ public class PassengerActivity extends AbstractRoleActivity
 	
 	public void onSearchRideAction(View v) {
 		
+		showProgressBarDialog();
+		
 		// Load fragments
 		if (fragmentPassengerSeachRideFragment == null) {
 			fragmentPassengerSeachRideFragment = (PassengerSearchRideFragment) 
@@ -104,6 +109,13 @@ public class PassengerActivity extends AbstractRoleActivity
 			GenericNotificationsFragment f) {
 		fragmentNotifications = f;
 		
+	}
+	
+	// METHODS FROM INTERFACE OnPassengerSearchRideFragmentListener
+
+	@Override
+	public void asynTaskCompleted() {
+		hideProgressBarDialog();
 	}
     
     

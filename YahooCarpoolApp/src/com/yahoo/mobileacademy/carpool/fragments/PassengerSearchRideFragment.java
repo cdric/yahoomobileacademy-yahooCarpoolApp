@@ -23,8 +23,8 @@ import com.parse.ParseQuery;
 import com.yahoo.mobileacademy.carpool.R;
 import com.yahoo.mobileacademy.carpool.activities.PassengerActivity;
 import com.yahoo.mobileacademy.carpool.adapters.RideSearchResultsAdapter;
+import com.yahoo.mobileacademy.carpool.asynctasks.CreateRideSearchResultListAsyncTask;
 import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
-import com.yahoo.mobileacademy.carpool.models.AuthenticatedUser;
 import com.yahoo.mobileacademy.carpool.models.Ride;
 
 public class PassengerSearchRideFragment extends Fragment {
@@ -33,6 +33,8 @@ public class PassengerSearchRideFragment extends Fragment {
 	
 	public interface OnPassengerSearchRideFragmentListener {
 
+		public void asynTaskCompleted();
+		
 	}
 	
 	private EditText etRideStart;
@@ -115,37 +117,27 @@ public class PassengerSearchRideFragment extends Fragment {
 			public void done(List<ParseObject> results, ParseException e) {
 		        
 				if (results.size() > 0) {
+					
+					RideSearchResultsAdapter adapter = (RideSearchResultsAdapter)lvSearchResults.getAdapter();
+					if (adapter != null) {
+						adapter.clear();	
+					}
+					
 			    	// Update ride details based on information stories in DB
-			    	updateSearchResulsList((List<Ride>)(List<?>) results);
+					new CreateRideSearchResultListAsyncTask(getActivity(), listener).execute((List<Ride>)(List<?>) results);	
 			    	
 			    } else {
-			    	// No ride have been define for this user 
+			    	
+			    	// No ride have been define for this user
+					listener.asynTaskCompleted();
 			    	Toast.makeText(getActivity().getBaseContext(), "No results were found for this query. Try with different parameters.!", Toast.LENGTH_SHORT).show();
+			    	
 			    }
+				
 			}
 			
 		});
 		
 	}
-	
-	/**
-	 * Update the list view with all search results
-	 *  - The method will create the adapter if it does not exist yet
-	 * @param resulst the List of Ride to add
-	 */
-	private void updateSearchResulsList(List<Ride> results) {
 		
-		RideSearchResultsAdapter adapter = (RideSearchResultsAdapter)lvSearchResults.getAdapter();
-		
-		if (adapter == null) {
-			adapter = new RideSearchResultsAdapter(getActivity().getBaseContext(), results);
-			lvSearchResults.setAdapter(adapter);
-		} else {
-			adapter.clear();
-			adapter.addAll(results);
-		}
-
-	}
-
-	
 }

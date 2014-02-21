@@ -3,6 +3,7 @@ package com.yahoo.mobileacademy.carpool.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.yahoo.mobileacademy.carpool.R;
+import com.yahoo.mobileacademy.carpool.fragments.base.AbstractBaseFragment;
 import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
 import com.yahoo.mobileacademy.carpool.models.Notification;
 
@@ -30,9 +32,11 @@ import com.yahoo.mobileacademy.carpool.models.Notification;
 public class NotificationsAdapter extends ArrayAdapter<Notification> {
 	
 	NotificationsAdapter mAdapter;
+	AbstractBaseFragment mFragment;
 	
-	public NotificationsAdapter(Context context, List<Notification> objects) {
-		super(context, 0, objects);
+	public NotificationsAdapter(AbstractBaseFragment fragment, List<Notification> objects) {
+		super(fragment.getActivity().getBaseContext(), 0, objects);
+		mFragment = fragment;
 	}
 
 	@Override
@@ -71,6 +75,9 @@ public class NotificationsAdapter extends ArrayAdapter<Notification> {
 			
 			@Override
 			public void onClick(View v) {
+				
+				mFragment.showProgressBar();
+				
 				notification.deleteInBackground(new DeleteCallback() {
 					
 					@Override
@@ -87,6 +94,8 @@ public class NotificationsAdapter extends ArrayAdapter<Notification> {
 							Toast.makeText(getContext(), "This notification cannot be dismissed at this time. Please try agian later [Error: " + e.getMessage() + "]", Toast.LENGTH_SHORT).show();
 						
 						}
+						
+						mFragment.hideProgressBar();
 						
 					}
 					

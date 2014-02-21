@@ -18,11 +18,11 @@ public abstract class User extends ParseObject {
 		
 	// Getters-Setters
 	
-	public int getUserId() { 
-		return getInt("userId");
+	public String getUserId() { 
+		return getString("userId");
 	}
 
-	public void setUserId(int id) {
+	public void setUserId(String id) {
 		put("userId", id);
 	}
 
