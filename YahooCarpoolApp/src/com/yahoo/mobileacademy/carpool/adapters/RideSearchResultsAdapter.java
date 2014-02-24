@@ -91,44 +91,66 @@ public class RideSearchResultsAdapter extends ArrayAdapter<RideSearchResult> {
 		
 		if (result.isRideFull()) {
 			btnRequestRide.setEnabled(false);
+			btnRequestRide.setText("Ride full"); 
 		} else {
-			// Register onClickListenerEvent
-			btnRequestRide.setEnabled(true);
-			btnRequestRide.setOnClickListener(new OnClickListener() {
+			
+			if (result.isHasPassengerRequestSent()) {
 				
-				@Override
-				public void onClick(View v) {
+				btnRequestRide.setEnabled(false);
+				
+				if (result.isHasPassengerRequestBeenApproved()) {
 					
-					// Fetch the userId for this search result
-					String userId = (String) v.getTag();
-					new FetchDriverParseObjectDataAsyncTask().execute(userId);
+					btnRequestRide.setText("Req. approved");
 					
-					btnRequestRide.setEnabled(false);
-					
-					// Update with you as a potential passenger
-					
-					AuthenticatedUser authUser = UtilityClass.getAuthenticatedUser();
-					
-					// Create Passenger object
-					Passenger passenger = new Passenger();
-					passenger.setUserId(authUser.getFacebookId());
-					passenger.setName(authUser.getName()); // TODO: We should remove this and get it from the 
-					                               // Facebook API if possible as part of the user profile
-					passenger.setIsApproved(false);
-					
-					result.getRide().addPassenger(passenger);
-					result.getRide().saveInBackground(new SaveCallback() {
-						
-						@Override
-						public void done(ParseException e) {
-							
-							Toast.makeText(getContext(), "Your request has been successfully saved", Toast.LENGTH_SHORT).show();
-							
-						}
-					});
-					
+				} else {
+				
+					btnRequestRide.setText("Req. pending");
+				
 				}
-			});
+				
+			} else {
+			
+				// Register onClickListenerEvent
+				btnRequestRide.setEnabled(true);
+				btnRequestRide.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						
+						// Fetch the userId for this search result
+						String userId = (String) v.getTag();
+						new FetchDriverParseObjectDataAsyncTask().execute(userId);
+						
+						btnRequestRide.setEnabled(false);
+						
+						// Update with you as a potential passenger
+						
+						AuthenticatedUser authUser = UtilityClass.getAuthenticatedUser();
+						
+						// Create Passenger object
+						Passenger passenger = new Passenger();
+						passenger.setUserId(authUser.getFacebookId());
+						passenger.setName(authUser.getName()); // TODO: We should remove this and get it from the 
+						                               // Facebook API if possible as part of the user profile
+						passenger.setIsApproved(false);
+						
+						result.getRide().addPassenger(passenger);
+						result.getRide().saveInBackground(new SaveCallback() {
+							
+							@Override
+							public void done(ParseException e) {
+								
+								Toast.makeText(getContext(), "Your request has been successfully saved", Toast.LENGTH_SHORT).show();
+								result.setHasPassengerRequestSent(true);
+								notifyDataSetChanged();
+								
+							}
+						});
+						
+					}
+				});
+			
+			}
 		}
 		
 		return mView;

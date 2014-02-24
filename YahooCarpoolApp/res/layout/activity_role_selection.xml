@@ -71,7 +71,7 @@
 		        android:padding="20dp"
 		        android:scaleType="fitCenter"
 		        android:adjustViewBounds="true"
-		        android:src="@drawable/passenger" />
+		        android:src="@drawable/passenger_old" />
 		    
 		    <TextView
 		        android:id="@+id/tvPassengerLabel"

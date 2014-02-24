@@ -7,15 +7,14 @@
     <string name="action_settings">Settings</string>
 
     <!-- Common -->
-    
+
+
     <!-- Action bar related strings -->
     <string name="action_profile">Select your role</string>
-    
     <string name="driver">Driver</string>
-    <string name="tab_driver_ridedetails">Ride</string>
+    <string name="tab_driver_ridedetails">My ride</string>
     <string name="tab_driver_notifications">Notifications</string>
     <string name="tab_driver_passengers"></string>
-    
     <string name="passenger">Passenger</string>
     <string name="tab_passenger_search">Search</string>
     <string name="tab_passenger_notifications">Notifications</string>
@@ -34,19 +33,49 @@
     <string name="passenger_description">I\'m a passenger</string>
     <string name="action_sign_out">Select your role</string>
 
-    <!--  Driver activity -->
+    <!-- Driver activity -->
     <string name="title_activity_driver">You are a driver</string>
     <string name="title_fragment_driver_ride_details_time">What time will you be leaving?</string>
     <string name="title_fragment_driver_ride_details_destination">Where will you be driving to?</string>
-    <string name="title_fragment_driver_ride_details_vehicule_capacity">How many people can you take?</string>    
+    <string name="title_fragment_driver_ride_details_vehicule_capacity">How many people can you take?</string>
     <string name="btnLockRide">Save</string>
     <string name="btnDelete">Delete</string>
-    
-    <!--  Passenger activity -->
+
+    <!-- Passenger activity -->
     <string name="title_activity_passenger">You are a passenger</string>
     <string name="title_fragment_driver_ride_details_time">What time will you be leaving?</string>
     <string name="title_fragment_passenger_ride_start_time">When would you like to leave?</string>
     <string name="title_fragment_passenger_search_ride_offset">How flexible are you?</string>
     <string name="btnSearchRide">Search</string>
-    
+
+    <!-- Drawer related text resources -->
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item>Home</item>
+        <item>Find People</item>
+        <item>Photos</item>
+        <item>Communities</item>
+        <item>Pages</item>
+        <item>What\'s Hot</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_people</item>
+        <item>@drawable/ic_photos</item>
+        <item>@drawable/ic_communities</item>
+        <item>@drawable/ic_pages</item>
+        <item>@drawable/ic_whats_hot</item>
+    </array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>

@@ -1,12 +1,13 @@
 package com.yahoo.mobileacademy.carpool.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -20,12 +21,48 @@ import com.yahoo.mobileacademy.carpool.models.Ride;
 
 public class DriverPassengerListFragment extends Fragment {
 	
-	ListView lvPassengersList;
+	private OnDriverPassengerListFragmentListener listener;
+	public interface OnDriverPassengerListFragmentListener {
+
+		public void asynTaskCompleted();
+		public void asyncTaskStarted();
+		
+	}
+	
+	private View mView;
+	private ListView lvPassengersList;
+	private TextView tvNoResults;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	    View view = inflater.inflate(R.layout.fragment_driver_passengers_list, container, false);
-	    return view; 
+		
+		if (mView == null) {
+		       mView = inflater.inflate(R.layout.fragment_driver_passengers_list, container, false); 
+		} else {
+		   // Avoid the view to be recreated upon tab switching!
+		   // The following code is required to prevent a Runtime exception
+		   ((ViewGroup) mView.getParent()).removeView(mView);
+		}
+			
+     return mView;
+      
+	}
+	
+	@Override
+	public void onAttach(Activity activity) { 
+		super.onAttach(activity);
+		
+		if (activity instanceof OnDriverPassengerListFragmentListener) {
+		      listener = (OnDriverPassengerListFragmentListener) activity;
+	    } else {
+	      throw new ClassCastException("Must implement " + OnDriverPassengerListFragmentListener.class.getName());
+	    }
+	}
+	
+	@Override
+	public void onDetach() { 
+		super.onDetach(); 
+		listener = null; 
 	}
 	
 	
@@ -39,13 +76,16 @@ public class DriverPassengerListFragment extends Fragment {
 
 	private void setupFragmentView() {
 		lvPassengersList = (ListView) getView().findViewById(R.id.lvPassengerList);
+		//TODO: Can provide a better name
+		tvNoResults = (TextView) getView().findViewById(R.id.tv_fragment_noResults);
 		
 	}
 	
 	private void loadRideDetails() {
 		
-		//TODO: Can we refactor this code with the similar method in DriverRideDetailsFragment.java?
+		listener.asyncTaskStarted();
 		
+		//TODO: Can we refactor this code with the similar method in DriverRideDetailsFragment.java?
 		AuthenticatedUser user = UtilityClass.getAuthenticatedUser();
 		
 		ParseQuery<ParseObject>driverQuery = ParseQuery.getQuery("Driver");
@@ -64,10 +104,13 @@ public class DriverPassengerListFragment extends Fragment {
 					if (ride.getPassengers().isEmpty()) {
 						
 						// No passengers in this ride yet
-						Toast.makeText(getActivity().getBaseContext(), "It looks like you will be riding home on your own :-(", Toast.LENGTH_SHORT).show();
+						lvPassengersList.setVisibility(ListView.INVISIBLE);
+						tvNoResults.setVisibility(TextView.VISIBLE);
 						
 					} else {
+						
 			    	   updatePassengerAdapter((Ride) object);
+			    	   
 					}
 			    	
 			    } else {
@@ -104,6 +147,8 @@ public class DriverPassengerListFragment extends Fragment {
 			adapter.clear();
 			adapter.addAll(ride.getPassengers());
 		}
+		
+		listener.asynTaskCompleted();
 
 	}
 

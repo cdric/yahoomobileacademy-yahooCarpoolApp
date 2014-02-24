@@ -4,13 +4,11 @@ import java.util.Calendar;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import com.yahoo.mobileacademy.carpool.R;
 import com.yahoo.mobileacademy.carpool.activities.base.AbstractRoleActivity;
@@ -41,7 +39,7 @@ public class PassengerActivity extends AbstractRoleActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passenger);
         setUpActivity();
-        setUpProgressBarDialog();
+        setUpProgressBarDialog("Searching...");
     }
 
 	private void setUpActivity() {
@@ -53,7 +51,7 @@ public class PassengerActivity extends AbstractRoleActivity
     	updateActionBarIconWithAuthUserFacebookProfileIcon(authUser.getFacebookId());
 	 
 		// Setup action bar properties
-		ActionBar actionBar = getActionBar(); 
+		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); 
 		
 		// Define action bar tabs
@@ -75,7 +73,8 @@ public class PassengerActivity extends AbstractRoleActivity
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.passenger, menu);
+		getMenuInflater().inflate(R.menu.passenger, menu);
+		getActionBar().setDisplayShowHomeEnabled(false);
         return true;
     }
 	

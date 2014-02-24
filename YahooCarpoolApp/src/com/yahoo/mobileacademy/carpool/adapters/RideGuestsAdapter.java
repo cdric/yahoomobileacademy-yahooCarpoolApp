@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -78,11 +79,11 @@ public class RideGuestsAdapter extends ArrayAdapter<Passenger> {
 		TextView phoneView = (TextView) mView.findViewById(R.id.tvPhone);
 		String formattedPhone;
 		if (mPassenger.getPhoneNumber() != null) {
-			formattedPhone = mPassenger.getPhoneNumber();
+			formattedPhone = mPassenger.getPhoneNumber(); 
 		} else {
 			//TODO: FIX THIS WITH REAL IMPLEM
 			//formattedPhone = "This user has not provided a phone number to be reached out to";
-			Random rand = new Random();
+			Random rand = new Random(mPassenger.getName().length()); // Fixed number generator / user
 			formattedPhone = "415-" + rand.nextInt(9) + rand.nextInt(9) + rand.nextInt(9) + "-" 
 					+ rand.nextInt(9) + rand.nextInt(9) + rand.nextInt(9) + rand.nextInt(9);
 		}
@@ -94,6 +95,8 @@ public class RideGuestsAdapter extends ArrayAdapter<Passenger> {
 
 		ImageButton btnAccept = (ImageButton) mView.findViewById(R.id.btn_accept_ride);
 		ImageButton btnReject = (ImageButton) mView.findViewById(R.id.btn_decline_ride);
+		
+		if (!mPassenger.isApproved()) {
 		
 		btnAccept.setOnClickListener(new OnClickListener() {
 			
@@ -118,7 +121,11 @@ public class RideGuestsAdapter extends ArrayAdapter<Passenger> {
 						String notificationMessage = 
 								authUser.getName() + " has accepted your request.";	
 						generateNotification(mPassenger, AppConstants.NOTIFICATION_TYPE_RIDE_ACCEPTED, notificationMessage);
-					
+						
+						// Update listview adapter
+						mPassenger.setIsApproved(true);
+						mAdapter.notifyDataSetChanged();
+						
 					} else {
 						
 						// An error occurred
@@ -148,15 +155,15 @@ public class RideGuestsAdapter extends ArrayAdapter<Passenger> {
 					
 					if (e == null) {
 					
-						mAdapter.remove(mPassenger);
-						mAdapter.notifyDataSetChanged();
-						
 						AuthenticatedUser authUser = UtilityClass.getAuthenticatedUser();
 						String notificationMessage = 
 								authUser.getName() + " has rejected your request.";	
 						generateNotification(mPassenger, AppConstants.NOTIFICATION_TYPE_RIDE_REJECTED, notificationMessage);
 					
-					
+						// Update listview adapter
+						mAdapter.remove(mPassenger);
+						mAdapter.notifyDataSetChanged();
+						
 					} else {
 						
 						// An error occurred
@@ -170,6 +177,15 @@ public class RideGuestsAdapter extends ArrayAdapter<Passenger> {
 				
 			}
 		});
+		
+		} else {
+		
+			// Passenger has been approved
+			
+			btnAccept.setVisibility(Button.GONE);
+			btnReject.setVisibility(Button.GONE);
+			
+		}
 		
 		return mView;
 	}
@@ -196,8 +212,9 @@ public class RideGuestsAdapter extends ArrayAdapter<Passenger> {
 			@Override
 			public void done(ParseException e) {
 				
-				Toast.makeText(getContext(), "We just sent a notification to " //+ driver.getUserId() 
-						+ "" + passenger.getName() + "", Toast.LENGTH_SHORT).show();
+				//TODO: Implement feedback mecanisme for the user
+//				Toast.makeText(getContext(), "We just sent a notification to " //+ driver.getUserId() 
+//						+ "" + passenger.getName() + "", Toast.LENGTH_SHORT).show();
 				
 			}
 		});

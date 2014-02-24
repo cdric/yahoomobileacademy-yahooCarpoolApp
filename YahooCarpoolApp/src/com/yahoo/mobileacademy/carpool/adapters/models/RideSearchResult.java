@@ -13,6 +13,8 @@ public class RideSearchResult {
 	private String rideDepartureETA;
 	private String vehiculeCapacityLeft;
 	private boolean isRideFull;
+	private boolean hasPassengerRequestSent = false;
+	private boolean hasPassengerRequestBeenApproved = false;
 	
 	private Ride ride;
 	
@@ -128,6 +130,35 @@ public class RideSearchResult {
 	 */
 	public void setRide(Ride ride) {
 		this.ride = ride;
+	}
+
+	/**
+	 * @return the hasPassengerRequestSent
+	 */
+	public boolean isHasPassengerRequestSent() {
+		return hasPassengerRequestSent;
+	}
+
+	/**
+	 * @param hasPassengerRequestSent the hasPassengerRequestSent to set
+	 */
+	public void setHasPassengerRequestSent(boolean hasPassengerRequestSent) {
+		this.hasPassengerRequestSent = hasPassengerRequestSent;
+	}
+
+	/**
+	 * @return the hasPassengerRequestBeenApproved
+	 */
+	public boolean isHasPassengerRequestBeenApproved() {
+		return hasPassengerRequestBeenApproved;
+	}
+
+	/**
+	 * @param hasPassengerRequestBeenApproved the hasPassengerRequestBeenApproved to set
+	 */
+	public void setHasPassengerRequestBeenApproved(
+			boolean hasPassengerRequestBeenApproved) {
+		this.hasPassengerRequestBeenApproved = hasPassengerRequestBeenApproved;
 	}
 
 }

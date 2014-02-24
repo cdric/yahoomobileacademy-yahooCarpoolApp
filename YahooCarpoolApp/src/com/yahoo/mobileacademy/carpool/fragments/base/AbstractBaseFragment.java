@@ -6,13 +6,19 @@ import android.widget.ProgressBar;
 
 import com.yahoo.mobileacademy.carpool.R;
 
+/**
+ * Base class for all fragment of this application
+ *  - Provide support for progress bar and associated utility methods
+ *  
+ * @author CŽdric Lignier <cedric.lignier@free.fr>
+ *
+ */
 public abstract class AbstractBaseFragment extends Fragment {
 	
 	protected ProgressBar pb;
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		pb = (ProgressBar) getActivity().findViewById(R.id.pb_loading);
 	}

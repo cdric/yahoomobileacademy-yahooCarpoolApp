@@ -16,7 +16,7 @@ import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
 import com.yahoo.mobileacademy.carpool.models.AuthenticatedUser;
 
 public abstract class AbstractRoleActivity extends FragmentActivity {
-	
+		
 	/**
 	 * Method invoked when user click on the "profile" icon from the action bar
 	 * @param mi the MenuItem
@@ -39,8 +39,7 @@ public abstract class AbstractRoleActivity extends FragmentActivity {
 		
 		// Update Action Bar to include user name
 		AuthenticatedUser user = UtilityClass.getAuthenticatedUser();
-		getActionBar().setTitle(getResources().getString(prefixId) + ": " + user.getName());
-				
+		getActionBar().setTitle(getResources().getString(prefixId) + ": " + user.getName());				
 	}
 	
 	/**
@@ -66,11 +65,11 @@ public abstract class AbstractRoleActivity extends FragmentActivity {
     /**
      * Prepare for a progress bar Dialog
      */
-    protected void setUpProgressBarDialog() {
+    protected void setUpProgressBarDialog(String message) {
     	
 		pbDialog = new ProgressDialog(this);
 		pbDialog.setCancelable(true);
-		pbDialog.setMessage("Updating ...");
+		pbDialog.setMessage(message);
 		pbDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		//pbDialog.setProgress(0);
 		//pbDialog.setMax(100);

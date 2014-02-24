@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,13 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.activeandroid.util.Log;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.yahoo.mobileacademy.carpool.R;
-import com.yahoo.mobileacademy.carpool.activities.DriverActivity;
+import com.yahoo.mobileacademy.carpool.activities.DriverActivityNew;
 import com.yahoo.mobileacademy.carpool.constants.AppConstants;
 import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
 import com.yahoo.mobileacademy.carpool.models.AuthenticatedUser;
@@ -68,6 +66,7 @@ public class DriverRideDetailsFragment extends Fragment {
 	    }
 	}
 	
+	@Override
 	public void onDetach() {
 		super.onDetach();
 		listener = null;
@@ -81,7 +80,7 @@ public class DriverRideDetailsFragment extends Fragment {
 		//AuthenticatedUser user = UtilityClass.getAuthenticatedUser();
 		//pvUserProfilePicture.setProfileId(String.valueOf(user.getFacebookId()));
 		
-		((DriverActivity) getActivity()).onTimePicked(Calendar.getInstance());
+		((DriverActivityNew) getActivity()).onTimePicked(Calendar.getInstance());
 		
 		// Load Ride data
 		loadRideDetails();

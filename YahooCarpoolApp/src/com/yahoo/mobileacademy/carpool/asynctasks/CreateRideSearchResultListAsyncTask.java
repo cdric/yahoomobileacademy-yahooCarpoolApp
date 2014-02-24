@@ -13,7 +13,9 @@ import com.yahoo.mobileacademy.carpool.adapters.RideSearchResultsAdapter;
 import com.yahoo.mobileacademy.carpool.adapters.models.RideSearchResult;
 import com.yahoo.mobileacademy.carpool.fragments.PassengerSearchRideFragment.OnPassengerSearchRideFragmentListener;
 import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
+import com.yahoo.mobileacademy.carpool.models.AuthenticatedUser;
 import com.yahoo.mobileacademy.carpool.models.Driver;
+import com.yahoo.mobileacademy.carpool.models.Passenger;
 import com.yahoo.mobileacademy.carpool.models.Ride;
 
 /**
@@ -53,6 +55,16 @@ public class CreateRideSearchResultListAsyncTask extends AsyncTask<List<Ride>, V
 	    		result.setRideFull(Ride.isRideFull(ride));
 	    		result.setDriverUserId(driver.getUserId());
 	    		result.setRide(ride);
+	    		
+	    		// Identify if passenger already send a request for this ride
+	    		AuthenticatedUser authUser = UtilityClass.getAuthenticatedUser();
+	    		List<Passenger> passengers = ride.getPassengers();
+	    		for (Passenger p: passengers) {
+	    			if (p.getUserId().equals(authUser.getFacebookId())) {
+	    				result.setHasPassengerRequestSent(true);
+	    				result.setHasPassengerRequestBeenApproved(p.isApproved());
+	    			}
+	    		}
 	    		
 	    		results.add(result);
 	    		

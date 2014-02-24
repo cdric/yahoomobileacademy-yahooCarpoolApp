@@ -16,14 +16,7 @@
         <item>+/- 30 minutes</item>
         <item>+/- 45 persons</item>
         <item>+/- 60 minutes</item>
-        <item>+ 15 minutes</item>
-        <item>+ 30 minutes</item>
-        <item>+ 45 persons</item>
-        <item>+ 60 minutes</item>
-        <item>- 15 minutes</item>
-        <item>- 30 minutes</item>
-        <item>- 45 persons</item>
-        <item>- 60 minutes</item>
+        <item>+/- 90 minutes</item>
     </string-array>
     
     <string-array name="ride_destinations_values">

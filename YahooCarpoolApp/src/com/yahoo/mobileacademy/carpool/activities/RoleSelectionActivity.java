@@ -12,6 +12,8 @@ import com.facebook.Session;
 import com.parse.ParseUser;
 import com.yahoo.mobileacademy.carpool.R;
 
+
+
 public class RoleSelectionActivity extends Activity {
 
 	@Override
@@ -34,6 +36,7 @@ public class RoleSelectionActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.role_selection, menu);
+		getActionBar().setDisplayShowHomeEnabled(false);
 		return true;
 	}
 	
@@ -42,7 +45,8 @@ public class RoleSelectionActivity extends Activity {
 	 * @param v the button
 	 */
 	public void onDriverAction(View v) {
-		Intent i = new Intent(this, DriverActivity.class);
+		//Intent i = new Intent(this, DriverActivity.class);
+		Intent i = new Intent(this, DriverActivityNew.class);
 		startActivity(i); 
 		//overridePendingTransition(android.R.anim.slide_out_right, android.R.anim.slide_in_left);              
 	}

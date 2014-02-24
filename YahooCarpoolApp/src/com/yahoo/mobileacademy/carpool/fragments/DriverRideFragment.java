@@ -10,10 +10,21 @@ import com.yahoo.mobileacademy.carpool.R;
 
 public class DriverRideFragment extends Fragment {
 	
+	private View mView = null;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	    View view = inflater.inflate(R.layout.fragment_driver_ride, container, false);
-	    return view; 
+	    
+		if (mView == null) {
+		       mView = inflater.inflate(R.layout.fragment_driver_ride, container, false); 
+		} else {
+		   // Avoid the view to be recreated upon tab switching!
+		   // The following code is required to prevent a Runtime exception
+		   ((ViewGroup) mView.getParent()).removeView(mView);
+		}
+			
+        return mView;
+	        
 	}
 		
 }

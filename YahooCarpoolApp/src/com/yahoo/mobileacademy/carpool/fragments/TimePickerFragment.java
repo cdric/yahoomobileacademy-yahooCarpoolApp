@@ -39,6 +39,12 @@ public class TimePickerFragment extends DialogFragment implements
 					+ " must implement " + TimePickedListener.class.getName());
 		}
 	} 
+	
+	@Override
+	public void onDetach() { 
+		super.onDetach(); 
+		mListener = null; 
+	}
 
 	@Override
 	public void onTimeSet(TimePicker view, int hourOfDay, int minute) {

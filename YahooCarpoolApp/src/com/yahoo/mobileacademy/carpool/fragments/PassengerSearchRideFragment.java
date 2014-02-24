@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -25,12 +26,12 @@ import com.yahoo.mobileacademy.carpool.activities.PassengerActivity;
 import com.yahoo.mobileacademy.carpool.adapters.RideSearchResultsAdapter;
 import com.yahoo.mobileacademy.carpool.asynctasks.CreateRideSearchResultListAsyncTask;
 import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
+import com.yahoo.mobileacademy.carpool.models.AuthenticatedUser;
 import com.yahoo.mobileacademy.carpool.models.Ride;
 
 public class PassengerSearchRideFragment extends Fragment {
 	
 	private OnPassengerSearchRideFragmentListener listener;
-	
 	public interface OnPassengerSearchRideFragmentListener {
 
 		public void asynTaskCompleted();
@@ -40,13 +41,25 @@ public class PassengerSearchRideFragment extends Fragment {
 	private EditText etRideStart;
 	private Spinner spRideOffset, spRideDestination;
 	private ListView lvSearchResults;
+	private TextView tvNoResults;
+	
+	private View mView;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	    View view = inflater.inflate(R.layout.fragment_passenger_search, container, false);
-	    return view; 
+		
+		if (mView == null) {
+		       mView = inflater.inflate(R.layout.fragment_passenger_search, container, false); 
+		} else {
+		   // Avoid the view to be recreated upon tab switching!
+		   // The following code is required to prevent a Runtime exception
+		   ((ViewGroup) mView.getParent()).removeView(mView);
+		}
+			
+     return mView;
+      
 	}
-	
+		
 	@Override
 	public void onAttach(Activity activity) { 
 		super.onAttach(activity);
@@ -58,6 +71,7 @@ public class PassengerSearchRideFragment extends Fragment {
 	    }
 	}
 	
+	@Override
 	public void onDetach() { 
 		super.onDetach(); 
 		listener = null; 
@@ -99,6 +113,7 @@ public class PassengerSearchRideFragment extends Fragment {
 		);
 		
 		lvSearchResults = (ListView) getActivity().findViewById(R.id.lvSearchResults);
+		tvNoResults = (TextView) getActivity().findViewById(R.id.tv_fragment_noResults);
 		
 	}
 		
@@ -110,8 +125,16 @@ public class PassengerSearchRideFragment extends Fragment {
 	 */
 	public void onSearchRideAction(View v) {
 		
+		AuthenticatedUser authUser = UtilityClass.getAuthenticatedUser();
+		
 		ParseQuery<ParseObject>rideQuery = ParseQuery.getQuery("Ride");
 		rideQuery.whereEqualTo("destination", spRideDestination.getSelectedItem().toString());
+	
+		// Exclude current driver from the list of results
+		ParseQuery<ParseObject> innerQuery = ParseQuery.getQuery("Driver");
+		innerQuery.whereEqualTo("userId", authUser.getFacebookId());
+		rideQuery.whereDoesNotMatchQuery("driver", innerQuery);
+	
 		rideQuery.findInBackground(new FindCallback<ParseObject>() {
 			
 			public void done(List<ParseObject> results, ParseException e) {
@@ -129,9 +152,9 @@ public class PassengerSearchRideFragment extends Fragment {
 			    } else {
 			    	
 			    	// No ride have been define for this user
-					listener.asynTaskCompleted();
-			    	Toast.makeText(getActivity().getBaseContext(), "No results were found for this query. Try with different parameters.!", Toast.LENGTH_SHORT).show();
-			    	
+			    	lvSearchResults.setVisibility(ListView.INVISIBLE);
+					tvNoResults.setVisibility(TextView.VISIBLE);
+					
 			    }
 				
 			}

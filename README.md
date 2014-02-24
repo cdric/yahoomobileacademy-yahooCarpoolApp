@@ -24,21 +24,32 @@ Release notes
 
 TODO
  - Must have for demo-day
-    - Implement progress bars for passenger fragment
-    - Implement empty notification view (by displaying a text view instead of a list item view)
     - Polish UI across the board
        - Style button and layouts
        - Update ActionBar Tabs icons
     - Add one activity animation / one fragment animation
-    - Style action bar
  - Nice to have for demo-day
     - Support offline mode 
     - Protect app again unavailable / failed API requests
     - Review the TODO I left in the code
     - Code cleanup
        - Move all strings into res folder
+    - Support landscape mode orientation 
  - Update the action bar for both driver and passenger to include the Facebook icon of the authenticated user
     - FIXIT: Code is there but the actionBar does not render. 
+
+Version 0.05 (2/24/2014)
+ - Bug fixes
+    - Fix to exclude current driver for list of potential rides
+    - Fix minor layout inconsistencies between activities
+ - Prevent fragment on a given activity to be reloaded if the data hasn't changed
+ - Add request status as part of the search result
+ - Replace Toast 
+    - when no passengers have been defined for the driver's ride
+    - when no search results were found for the passenger's ride
+ - Implement progress bar for driver passenger list fragment
+ - Remove icon from action bar across all activities
+ - Style the action bar
 
 Version 0.04 (2/20/2014)
  - Bug fixes

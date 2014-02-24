@@ -31,11 +31,24 @@ public class GenericNotificationsFragment extends AbstractBaseFragment {
 	}
 	
 	private ListView lvNotifications;
+	private View mView;
+	
+	//TODO: Improve mecanism to defect if view fragment to be refreshed
+	private boolean hasNotificationAlreadyLoaded = false;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	    View view = inflater.inflate(R.layout.fragment_generic_notifications_list, container, false);
-	    return view;  
+		
+		if (mView == null) {
+		       mView = inflater.inflate(R.layout.fragment_generic_notifications_list, container, false); 
+		} else {
+		   // Avoid the view to be recreated upon tab switching!
+		   // The following code is required to prevent a Runtime exception
+		   ((ViewGroup) mView.getParent()).removeView(mView);
+		}
+			
+     return mView;
+      
 	}
 	
 	@Override
@@ -48,6 +61,7 @@ public class GenericNotificationsFragment extends AbstractBaseFragment {
 	    }
 	}
 	
+	@Override
 	public void onDetach() { 
 		super.onDetach(); 
 		listener = null;
@@ -58,11 +72,14 @@ public class GenericNotificationsFragment extends AbstractBaseFragment {
 		super.onActivityCreated(savedInstanceState);
 		setupFragmentView();
 		
-		loadNotifications();
+		if (hasNotificationAlreadyLoaded == false) { //TODO: Only reload if required 
+			loadNotifications();
+		}
 	}
 
 	private void loadNotifications() {
 		
+		hasNotificationAlreadyLoaded = true;
 		showProgressBar();
 		
 		AuthenticatedUser authUser = UtilityClass.getAuthenticatedUser();
