@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.yahoo.mobileacademy.carpool.R;
+import com.yahoo.mobileacademy.carpool.activities.base.AbstractSlidingMenuActivity;
 import com.yahoo.mobileacademy.carpool.fragments.base.AbstractBaseFragment;
 import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
 import com.yahoo.mobileacademy.carpool.models.Notification;
@@ -76,7 +77,12 @@ public class NotificationsAdapter extends ArrayAdapter<Notification> {
 			@Override
 			public void onClick(View v) {
 				
-				mFragment.showProgressBar();
+				// Display progress bar
+				// TODO: Use listener instead!
+				if (mFragment.getActivity() instanceof AbstractSlidingMenuActivity) {
+					((AbstractSlidingMenuActivity) mFragment.getActivity()).setProgressBarDialogTitle("Updating...");
+					((AbstractSlidingMenuActivity) mFragment.getActivity()).showProgressBarDialog();
+				}		
 				
 				notification.deleteInBackground(new DeleteCallback() {
 					
@@ -95,7 +101,11 @@ public class NotificationsAdapter extends ArrayAdapter<Notification> {
 						
 						}
 						
-						mFragment.hideProgressBar();
+						// Remove progress bar
+						// TODO: Use listener instead!
+						if (mFragment.getActivity() instanceof AbstractSlidingMenuActivity) {
+							((AbstractSlidingMenuActivity) mFragment.getActivity()).hideProgressBarDialog();
+						}
 						
 					}
 					
@@ -104,6 +114,12 @@ public class NotificationsAdapter extends ArrayAdapter<Notification> {
 			}
 			
 		});
+		
+		// Remove progress bar
+		// TODO: Use listener instead!
+		if (mFragment.getActivity() instanceof AbstractSlidingMenuActivity) {
+			((AbstractSlidingMenuActivity) mFragment.getActivity()).hideProgressBarDialog();
+		}
 		
 	   return mView;
 	  

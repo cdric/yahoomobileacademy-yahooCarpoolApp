@@ -12,14 +12,14 @@
     
     <fragment
         android:id="@+id/flRideDetails"
-        android:name="com.yahoo.mobileacademy.carpool.fragments.DriverRideDetailsFragment"
+        android:name="com.yahoo.mobileacademy.carpool.fragments.driver.DriverRideDetailsFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_driver_ride_details" />
 
     <fragment
         android:id="@+id/flRidePassengers"
-        android:name="com.yahoo.mobileacademy.carpool.fragments.DriverPassengerListFragment"
+        android:name="com.yahoo.mobileacademy.carpool.fragments.driver.DriverPassengerListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_driver_passengers_list"

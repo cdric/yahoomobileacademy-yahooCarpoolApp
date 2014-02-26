@@ -3,11 +3,15 @@ package com.yahoo.mobileacademy.carpool.asynctasks;
 import java.util.List;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+import com.parse.SendCallback;
 import com.yahoo.mobileacademy.carpool.constants.AppConstants;
 import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
 import com.yahoo.mobileacademy.carpool.models.AuthenticatedUser;
@@ -74,6 +78,12 @@ public class FetchDriverParseObjectDataAsyncTask extends AsyncTask<String, Void,
 				
 			}
 		});
+		
+//		// Send push notification to recipient
+//		ParsePush push = new ParsePush();
+//		push.setChannel("user-" + result.getUserId());
+//		push.setMessage(messageForRecipient);
+//		push.sendInBackground();
 		
 	}
 

@@ -13,7 +13,7 @@
         android:id="@+id/tv_fragment_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I want to..."
+        android:text="Ride search details"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 	<RelativeLayout
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="@string/title_fragment_driver_ride_details_destination" />
+            android:text="@string/title_fragment_passenger_ride_details_destination" />
 
         <Spinner
             android:id="@+id/sp_passenger_search_ride_destination"
@@ -83,6 +83,27 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_passenger_search_ride_desitnation"
             android:layout_toEndOf="@+id/tv_passenger_search_ride_desitnation" />
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tv_passenger_search_ride_businessunit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/title_fragment_passenger_ride_details_businessunit" />
+
+        <Spinner
+            android:id="@+id/sp_passenger_search_ride_businessunit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_passenger_search_ride_businessunit"
+            android:layout_toEndOf="@+id/tv_passenger_search_ride_businessunit" />
     </RelativeLayout>
     
 	<RelativeLayout

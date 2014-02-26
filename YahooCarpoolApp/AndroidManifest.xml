@@ -29,7 +29,15 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Carpool" >
+        
         <service android:name="com.parse.PushService" />
+
+		<receiver android:name="com.parse.ParseBroadcastReceiver">
+		  <intent-filter>
+		    <action android:name="android.intent.action.BOOT_COMPLETED" />
+		    <action android:name="android.intent.action.USER_PRESENT" />
+		  </intent-filter>
+		</receiver>
 
         <receiver
             android:name="com.parse.GcmBroadcastReceiver"
@@ -72,10 +80,6 @@
         <activity
             android:name="com.yahoo.mobileacademy.carpool.activities.PassengerActivity"
             android:label="@string/title_activity_passenger" >
-        </activity>
-        <activity
-            android:name="com.yahoo.mobileacademy.carpool.activities.DriverActivityNew"
-            android:label="@string/title_activity_main" >
         </activity>
     </application>
 

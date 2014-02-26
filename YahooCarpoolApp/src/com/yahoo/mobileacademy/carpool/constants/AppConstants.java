@@ -15,7 +15,7 @@ public class AppConstants {
    public static final int REQUEST_XXXXX_ACTIVITY = 101;
    
    // Date formatting
-   public static final String DRIVER_RIDE_DATE_FORMAT = "h:mm a"; 
+   public static final String DRIVER_RIDE_DATE_FORMAT = "hh:mm a"; 
    
 	public static final PeriodFormatter PERIODFORMATTER_HOURS_AND_MINUTES = new PeriodFormatterBuilder()
 	    .appendHours()

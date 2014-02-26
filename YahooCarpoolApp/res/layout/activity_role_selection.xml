@@ -7,36 +7,44 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".RoleSelectionActivity" >
-
     
     <TextView
-        android:id="@+id/tvRoleDescription"
+        android:id="@+id/tvRoleDescriptionPartOne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:textAlignment="center"
         android:gravity="center"
-        android:text="@string/driver_passenger_role_description" />
+        android:text="@string/driver_passenger_role_description_partOne"
+        android:textAlignment="center" />
+    
+    <TextView
+        android:id="@+id/tvRoleDescriptionPartTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvRoleDescriptionPartOne"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/driver_passenger_role_description_partTwo"
+        android:textAlignment="center" />
     
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tvRoleDescriptionPartTwo"
 		android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
         
         <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-		android:layout_marginRight="10dp"
+		android:layout_margin="20dp"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:orientation="vertical" >
     
 		    <ImageButton
-		        android:id="@+id/tvPassengerLabel"
+		        android:id="@+id/iv_driver_icon"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:onClick="onDriverAction"
@@ -46,7 +54,7 @@
 		        android:src="@drawable/driver" />
 		    
 		    <TextView
-		        android:id="@+id/tvPassengerLabel"
+		        android:id="@+id/tv_driver_label"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_gravity="center"
@@ -58,23 +66,23 @@
         <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-		android:layout_marginRight="10dp"
+		android:layout_margin="20dp"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:orientation="vertical" >
     
 		    <ImageButton
-		        android:id="@+id/tvPassengerLabel"
+		        android:id="@+id/iv_passenger_icon"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:onClick="onPassengerAction"
 		        android:padding="20dp"
 		        android:scaleType="fitCenter"
 		        android:adjustViewBounds="true"
-		        android:src="@drawable/passenger_old" />
+		        android:src="@drawable/passenger_4" />
 		    
 		    <TextView
-		        android:id="@+id/tvPassengerLabel"
+		        android:id="@+id/tv_passenger_labell"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_gravity="center"
@@ -85,7 +93,8 @@
         
 
 
-</LinearLayout>
+	</LinearLayout>
 
+    
 
 </RelativeLayout>

@@ -28,7 +28,9 @@
 
     <!-- Role section activity -->
     <string name="title_activity_role_selection">Select your role</string>
-    <string name="driver_passenger_role_description">Are you a driver looking to offer a ride or a passenger looking for a ride?</string>
+    <string name="driver_passenger_role_description_partOne">Are you a driver looking to offer a ride</string>
+    <string name="driver_passenger_role_description_partTwo">or a passenger looking for a ride?</string>
+    
     <string name="driver_description">I\'m a driver</string>
     <string name="passenger_description">I\'m a passenger</string>
     <string name="action_sign_out">Select your role</string>
@@ -44,7 +46,9 @@
     <!-- Passenger activity -->
     <string name="title_activity_passenger">You are a passenger</string>
     <string name="title_fragment_driver_ride_details_time">What time will you be leaving?</string>
-    <string name="title_fragment_passenger_ride_start_time">When would you like to leave?</string>
+    <string name="title_fragment_passenger_ride_start_time">How flexible are you?</string>
+    <string name="title_fragment_passenger_ride_details_destination">Where would you like to go?</string>
+    <string name="title_fragment_passenger_ride_details_businessunit">Which Business Unit?</string>
     <string name="title_fragment_passenger_search_ride_offset">How flexible are you?</string>
     <string name="btnSearchRide">Search</string>
 
@@ -52,30 +56,10 @@
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
 
-    <!-- Nav Drawer Menu Items -->
-    <string-array name="nav_drawer_items">
-        <item>Home</item>
-        <item>Find People</item>
-        <item>Photos</item>
-        <item>Communities</item>
-        <item>Pages</item>
-        <item>What\'s Hot</item>
-    </string-array>
-
-    <!-- Nav Drawer List Item Icons -->
-    <!-- Keep them in order as the titles are in -->
-    <array name="nav_drawer_icons">
-        <item>@drawable/ic_home</item>
-        <item>@drawable/ic_people</item>
-        <item>@drawable/ic_photos</item>
-        <item>@drawable/ic_communities</item>
-        <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_whats_hot</item>
-    </array>
-
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_sliding_menu">SlidingMenuActivity</string>
 
 </resources>

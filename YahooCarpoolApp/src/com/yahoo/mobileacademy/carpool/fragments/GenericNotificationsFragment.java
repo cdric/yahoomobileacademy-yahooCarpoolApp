@@ -8,8 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -19,18 +18,16 @@ import com.yahoo.mobileacademy.carpool.R;
 import com.yahoo.mobileacademy.carpool.adapters.NotificationsAdapter;
 import com.yahoo.mobileacademy.carpool.fragments.base.AbstractBaseFragment;
 import com.yahoo.mobileacademy.carpool.helpers.UtilityClass;
+import com.yahoo.mobileacademy.carpool.listeners.AsyncFragmentRefreshListener;
 import com.yahoo.mobileacademy.carpool.models.AuthenticatedUser;
 import com.yahoo.mobileacademy.carpool.models.Notification;
 
 public class GenericNotificationsFragment extends AbstractBaseFragment {
 		
-	private OnGenericNotificationsFragment listener;
-	
-	public interface OnGenericNotificationsFragment {
-		public void onGenericNotificationsFragmentReady(GenericNotificationsFragment f);
-	}
+	private AsyncFragmentRefreshListener listener;
 	
 	private ListView lvNotifications;
+	private TextView tvNoResults;
 	private View mView;
 	
 	//TODO: Improve mecanism to defect if view fragment to be refreshed
@@ -54,10 +51,10 @@ public class GenericNotificationsFragment extends AbstractBaseFragment {
 	@Override
 	public void onAttach(Activity activity) { 
 		super.onAttach(activity);
-		if (activity instanceof OnGenericNotificationsFragment) {
-		      listener = (OnGenericNotificationsFragment) activity;
+		if (activity instanceof AsyncFragmentRefreshListener) {
+		      listener = (AsyncFragmentRefreshListener) activity;
 	    } else {
-	      throw new ClassCastException("Must implement " + OnGenericNotificationsFragment.class.getName());
+	      throw new ClassCastException("Must implement " + AsyncFragmentRefreshListener.class.getName());
 	    }
 	}
 	
@@ -80,7 +77,8 @@ public class GenericNotificationsFragment extends AbstractBaseFragment {
 	private void loadNotifications() {
 		
 		hasNotificationAlreadyLoaded = true;
-		showProgressBar();
+		listener.asyncContentRefreshTaskStarted("Loading...");
+		//showProgressBar();
 		
 		AuthenticatedUser authUser = UtilityClass.getAuthenticatedUser();
 		
@@ -96,11 +94,11 @@ public class GenericNotificationsFragment extends AbstractBaseFragment {
 			    	
 			    } else {
 			    	
+			    	listener.asyncContentRefreshTaskCompleted();
+			    	
 			    	// No notifications exits for this user
-			    	Toast.makeText(getActivity().getBaseContext(), "No notifications. All good!", Toast.LENGTH_SHORT).show();
+			    	// Toast.makeText(getActivity().getBaseContext(), "No notifications. All good!", Toast.LENGTH_SHORT).show();
 			    }
-				
-				hideProgressBar();
 				
 			}
 			
@@ -109,8 +107,12 @@ public class GenericNotificationsFragment extends AbstractBaseFragment {
 	}
 
 	private void setupFragmentView() {
+		
+		tvNoResults = (TextView) getView().findViewById(R.id.tv_fragment_noResults);
+		
 		lvNotifications = (ListView) getActivity().findViewById(R.id.lvNotifications);
-		listener.onGenericNotificationsFragmentReady(this);
+		lvNotifications.setEmptyView(tvNoResults);
+
 	}
 
 

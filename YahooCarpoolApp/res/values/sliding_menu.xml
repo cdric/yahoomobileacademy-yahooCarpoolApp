@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item>Switch role</item>
+        <item>Sign out</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_action_profile</item>
+        <item>@drawable/ic_action_signout</item>
+    </array>
+    
+    <!-- Nav Drawer Colors -->
+    <color name="list_item_title">#fff</color>
+    <color name="list_background">#965d3f</color>
+    <color name="list_background_pressed">#992416</color>
+    <color name="list_divider">#272727</color>
+    <color name="counter_text_bg">#626262</color>
+    <color name="counter_text_color">#c5c4c4</color>
+    
+    <dimen name="slidingmenu_offset">160dp</dimen>
+    <dimen name="list_padding">0dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
+
+    <integer name="num_cols">1</integer>
+</resources>

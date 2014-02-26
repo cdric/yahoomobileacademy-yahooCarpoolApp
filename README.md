@@ -23,20 +23,26 @@ Release notes
 -------------
 
 TODO
- - Must have for demo-day
-    - Polish UI across the board
-       - Style button and layouts
-       - Update ActionBar Tabs icons
-    - Add one activity animation / one fragment animation
  - Nice to have for demo-day
     - Support offline mode 
     - Protect app again unavailable / failed API requests
-    - Review the TODO I left in the code
     - Code cleanup
        - Move all strings into res folder
-    - Support landscape mode orientation 
+       - Review the TODO I left in the code
+    - Support landscape mode orientation  
+    - First attempt at push notification
+    - Style buttons
  - Update the action bar for both driver and passenger to include the Facebook icon of the authenticated user
     - FIXIT: Code is there but the actionBar does not render. 
+
+Version 1.00 (2/25/2014) - First release for project demo
+ - Implement sliding menu bar
+ - Added library support for
+    - ActionBar Sherlock (http://actionbarsherlock.com/)
+    - SlidingMenu (https://github.com/jfeinstein10/SlidingMenu)
+ - Add custom application icon
+ - Update ActionBar Tabs icons
+ - Animate icon to select role
 
 Version 0.05 (2/24/2014)
  - Bug fixes

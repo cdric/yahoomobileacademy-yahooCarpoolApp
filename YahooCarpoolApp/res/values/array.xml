@@ -12,19 +12,29 @@
     </string-array>
     
     <string-array name="ride_offset_values">
-        <item>+/- 15 minutes</item>
-        <item>+/- 30 minutes</item>
-        <item>+/- 45 persons</item>
-        <item>+/- 60 minutes</item>
         <item>+/- 90 minutes</item>
+        <item>+/- 60 minutes</item>
+        <item>+/- 45 minutes</item>
+        <item>+/- 30 persons</item>
+        <item>+/- 15 minutes</item>
     </string-array>
     
     <string-array name="ride_destinations_values">
-        <item>San Francisco, CA</item>
-        <item>Palo Alto, CA</item>
-        <item>Santa Clara, CA</item>
-        <item>San Jose, CA</item>
-        <item>Sunnyvale, CA</item>
-        <item>Berkley, CA</item>
+        <item>San Francisco</item>
+        <item>Palo Alto</item>
+        <item>Santa Clara</item>
+        <item>San Jose</item>
+        <item>Sunnyvale</item>
+        <item>Berkley</item>
+    </string-array>
+    
+    <string-array name="ride_business_unit_values">
+        <item>All</item>
+        <item>Ads and Data</item>
+        <item>Communications</item>
+        <item>HP and Verticals</item>
+        <item>Platforms</item>
+        <item>MEP</item>
+        <item>Search</item>
     </string-array>
 </resources>

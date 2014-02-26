@@ -9,11 +9,13 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseFacebookUtils;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.PushService;
 import com.yahoo.mobileacademy.carpool.R;
 import com.yahoo.mobileacademy.carpool.activities.DriverActivity;
+import com.yahoo.mobileacademy.carpool.activities.LoginActivity;
 import com.yahoo.mobileacademy.carpool.models.Driver;
 import com.yahoo.mobileacademy.carpool.models.Notification;
 import com.yahoo.mobileacademy.carpool.models.Passenger;
@@ -48,12 +50,14 @@ public class CarpoolApp extends com.activeandroid.app.Application {
 		ImageLoader.getInstance().init(config);
 		
 		// -- Initialize Parse --
+		
 		// Register your parse models
 	    ParseObject.registerSubclass(User.class);
 	    ParseObject.registerSubclass(Ride.class);
 	    ParseObject.registerSubclass(Passenger.class);
 	    ParseObject.registerSubclass(Driver.class); 
 	    ParseObject.registerSubclass(Notification.class); 
+	    
 	    // Init
 		Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
 		ParseFacebookUtils.initialize(getResources().getString(R.string.app_id));
@@ -62,8 +66,9 @@ public class CarpoolApp extends com.activeandroid.app.Application {
 		defaultACL.setPublicReadAccess(true);
 		defaultACL.setPublicWriteAccess(true);
 		ParseACL.setDefaultACL(defaultACL, true); 
+		
 		// Setup push notification 
-		PushService.setDefaultPushCallback(this, DriverActivity.class); 
+		PushService.setDefaultPushCallback(this, LoginActivity.class); 
 		
 	}
 	

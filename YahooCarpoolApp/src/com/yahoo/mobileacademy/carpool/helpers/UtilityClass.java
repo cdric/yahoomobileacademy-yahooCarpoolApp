@@ -10,20 +10,20 @@ import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-import com.activeandroid.util.Log;
-import com.parse.FindCallback;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
+import com.facebook.Session;
 import com.parse.ParseUser;
 import com.yahoo.mobileacademy.carpool.R;
+import com.yahoo.mobileacademy.carpool.activities.LoginActivity;
 import com.yahoo.mobileacademy.carpool.models.AuthenticatedUser;
-import com.yahoo.mobileacademy.carpool.models.Driver;
-import com.yahoo.mobileacademy.carpool.models.Ride;
 
 public class UtilityClass {
 	
@@ -99,7 +99,18 @@ public class UtilityClass {
 	 */
 	public static String computeDifferentBetweenTwoDates(Date startTime, Date endTime, PeriodFormatter formatter) {
 		
-		Period p = new Period(endTime.getTime(), startTime.getTime());
+		//TODO: This is needed because the date store in Parse are from 1/1/1970
+		// and the Joda Time API doesnt seems to like this
+		startTime.setDate(1);
+		startTime.setMonth(1);
+		startTime.setYear(2014);
+		endTime.setDate(1);
+		endTime.setMonth(1);
+		endTime.setYear(2014);
+		
+		//Toast.makeText(c, "S: " + startTime + " - E: " + endTime, Toast.LENGTH_LONG).show();
+		
+		Period p = new Period(startTime.getTime(), endTime.getTime());
 		return formatter.print(p);
 		
 	}
@@ -164,6 +175,26 @@ public class UtilityClass {
 		String image = "http://graph.facebook.com/"+ userId +"/picture?type=large";
 		Log.d("debug", "getDisplayImageURLForFacebookId: " + image);
 		return image;
+	}
+
+	/**
+	 * Logout the current user
+	 * @param a
+	 */
+	public static void signOutAuthenticatedUser(FragmentActivity fa) {
+		ParseUser.logOut();
+				
+		Session session = Session.getActiveSession();
+        if (!session.isClosed()) {
+            session.closeAndClearTokenInformation();
+            Log.d("debug",
+					"Closing Facebook session");
+        }
+        
+        Intent intent = new Intent(fa, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        fa.startActivity(intent);
 	}
 	
 }

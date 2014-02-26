@@ -19,6 +19,7 @@ import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.model.GraphUser;
 import com.parse.LogInCallback;
+import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
@@ -40,6 +41,8 @@ public class LoginActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		
+		ParseAnalytics.trackAppOpened(getIntent());
 		
 		// Check if there is a currently logged in user
 		// and they are linked to a Facebook account.
@@ -101,10 +104,6 @@ public class LoginActivity extends FragmentActivity {
 								userProfile.put("name", user.getName());
 								userProfile.put("first_name", user.getFirstName());
 								userProfile.put("last_name", user.getLastName());
-//								if (user.getLocation().getProperty("name") != null) {
-//									userProfile.put("location", (String) user
-//											.getLocation().getProperty("name"));
-//								}
 								if (user.getProperty("gender") != null) {
 									userProfile.put("gender",
 											(String) user.getProperty("gender"));
